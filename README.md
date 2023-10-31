@@ -10,3 +10,9 @@
     - `git fetch`
   - CẤM `git push -f` ở master
   -test
+  git checkout master
+   git fetch
+   git pull origin master
+   git branch  
+   git checkout tennhanh/Tai 
+   git rebase master
