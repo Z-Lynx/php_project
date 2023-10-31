@@ -10,4 +10,4 @@
     - `git fetch`
   - CẤM `git push -f` ở master
 
-  
+  Thanh Tu push 
