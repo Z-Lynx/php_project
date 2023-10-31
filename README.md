@@ -9,3 +9,4 @@
     - `git branch -D master`
     - `git fetch`
   - CẤM `git push -f` ở master
+  -test
