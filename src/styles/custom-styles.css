@@ -1,0 +1,18 @@
+/* sign-in-up-styles.css */
+button {
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    border: 2px solid #333; 
+  }
+  
+  button:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  
