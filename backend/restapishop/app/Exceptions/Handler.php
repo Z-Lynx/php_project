@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Traits\HttpResponses;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -12,6 +14,8 @@ class Handler extends ExceptionHandler
      *
      * @var array<int, string>
      */
+    use HttpResponses;
+    
     protected $dontFlash = [
         'current_password',
         'password',
@@ -26,5 +30,12 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $request->expectsJson()
+            ? $this->errorResponse($exception->getMessage(), 401)
+            : redirect()->guest(route('login'));
     }
 }
