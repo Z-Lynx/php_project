@@ -1,27 +1,28 @@
 <template>
-    <div>
-        <div class="add-data">
-            <p>Category management</p>
-            <button class="btn-add">Add category</button>
-
+    <div class="m-10">
+        <div class="flex justify-between items-center mb-4 ">
+            <p class="text-xl font-semibold">Category management</p>
+            <button class="bg-green-500 text-white py-2 px-4 rounded cursor-pointer">Add category</button>
         </div>
-        <table class="admin-table">
+        <table class="w-full border-collapse border">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>categoryName</th>
-                    <th>description</th>
-                    <th>action</th>
+                    <th class="border py-2 px-4">ID</th>
+                    <th class="border py-2 px-4">categoryName</th>
+                    <th class="border py-2 px-4">description</th>
+                    <th class="border py-2 px-4">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="category in categories" :key="category.id">
-                    <td>{{ category.idCategory }}</td>
-                    <td>{{ category.categoryName }}</td>
-                    <td>{{ category.description }}</td>
-                    <td>
-                        <button @click="deleteCategory(category.idCategory)" class="btn-delete">Delete</button>
-                        <button @click="editCategory(category.idCategory)" class="btn-update">Update</button>
+                <tr v-for="category in categories" :key="category.idCategory">
+                    <td class="border py-2 px-4 text-center">{{ category.idCategory }}</td>
+                    <td class="border py-2 px-4 text-center">{{ category.categoryName }}</td>
+                    <td class="border py-2 px-4 text-center">{{ category.description }}</td>
+                    <td class="border py-2 px-4 text-center">
+                        <button @click="deleteCategory(category.idCategory)"
+                            class="bg-red-500 text-white py-2 px-4 rounded cursor-pointer">Delete</button>
+                        <button @click="editCategory(category.idCategory)"
+                            class="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer ml-10">Update</button>
                     </td>
                 </tr>
             </tbody>
@@ -52,43 +53,4 @@ export default {
     },
 };
 </script>
-  
-<style>
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.admin-table th,
-.admin-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.btn-delete,
-.btn-update {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-.add-data{
-    
-    display:flex;
-    justify-content: space-between;
-  }
-  .btn-add{
-    background-color: rgb(0, 99, 0);
-    color: white;
-    cursor: pointer;
-    padding: 5px 10px;
-   margin-bottom: 5px;
-  }
-
-.btn-update {
-    background-color: #3498db;
-}
-</style>
   
