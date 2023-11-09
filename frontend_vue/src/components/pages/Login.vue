@@ -31,14 +31,14 @@ export default {
 .login-container {
   text-align: center;
   margin: 50px auto;
-  max-width: 740px; /* Đã thay đổi max-width thành 740px để cân đối với các nút */
+  max-width: 740px; 
 }
 
 .input-container {
   margin: 10px 0;
   display: flex;
   align-items: center;
-  justify-content: center; /* Đã thêm justify-content để căn giữa nội dung */
+  justify-content: center; 
 }
 
 label {
@@ -74,8 +74,8 @@ google-button {
 
 facebook-button,
 google-button {
-  height: 42px; /* Chiều cao nút Facebook và Google */
-  background-color: #1877f2; /* Màu nền Facebook và Google */
+  height: 42px; 
+  background-color: #1877f2; 
   color: #fff;
   border: none;
   margin-top: 10px;
@@ -84,7 +84,7 @@ google-button {
 }
 
 google-button {
-  background-color: #4285f4; /* Màu nền Google */
+  background-color: #4285f4; 
 }
 
 .separator {
@@ -95,6 +95,6 @@ google-button {
 .button-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Để căn giữa nút theo chiều ngang */
+  align-items: center; 
 }
 </style>
