@@ -1,67 +1,34 @@
-
 <template>
-    <div class="admin-layout">
+    <div class="admin-layout m-10">
+        <h1 class="text-center text-3xl font-bold">ADMIN</h1>
         <nav class="sidebar">
-            <button @click="open = !open" class="btn-dropdow-link">Management</button>
+            <button @click="open = !open"
+                class="btn-dropdow-link bg-gray-500 text-white py-2 px-4 rounded cursor-pointer">Management</button>
             <ul v-if="open">
-                <li class="link-nav"><router-link to="/admin/category">Category</router-link></li>
-                <li class="link-nav"><router-link to="/admin/user">User</router-link></li>
-                <li class="link-nav"><router-link to="/admin/product">Product</router-link></li>
+                <router-link to="/admin/category" >
+                    <li class="link-nav hover:bg-gray-500 hover:text-white bg-gray-300 py-2 px-4 block">Category</li>
+                </router-link>
+                <router-link to="/admin/product" >
+                    <li class="link-nav hover:bg-gray-500 hover:text-white bg-gray-300 py-2 px-4 block">Product</li>
+                </router-link>
+                <router-link to="/admin/user" >
+                    <li class="link-nav hover:bg-gray-500 hover:text-white bg-gray-300 py-2 px-4 block">User</li>
+                </router-link>
             </ul>
         </nav>
         <div class="content">
             <router-view></router-view>
         </div>
-
     </div>
 </template>
+  
 <script>
 export default {
     data() {
         return {
-            open: false
-        }
-    }
-}
+            open: false,
+        };
+    },
+};
 </script>
-
-<style>
-.admin-layout {
-    padding-top: 50px;
-    display: flex;
-
-}
-
-.sidebar {
-
-
-    width: 200px;
-    padding: 20px;
-    background-color: #c1c1c1;
-    color: rgb(0, 0, 0);
-
-}
-
-.btn-dropdow-link {
-    padding: 10px;
-
-    background-color: rgb(133, 133, 133);
-}
-
-.link-nav {
-
-    padding: 10px;
-
-    background-color: rgb(186, 186, 186);
-
-}
-
-.content {
-    padding: 20px;
-
-    margin-left: 20px;
-
-}
-</style>
-  
   

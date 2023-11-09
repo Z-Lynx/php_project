@@ -1,35 +1,36 @@
 <template>
-  <div>
-    <div class="add-data">
-      <p>Product management</p>
-      <button class="btn-add">Add product</button>
-
+  <div class="m-10">
+    <div class="flex justify-between items-center mb-4">
+      <p class="text-xl font-bold">Product management</p>
+      <button class="bg-green-500 text-white py-2 px-4 rounded cursor-pointer">Add product</button>
     </div>
-    <table class="admin-table">
+    <table class="w-full border-collapse border">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>productName</th>
-          <th>category</th>
-          <th>price</th>
-          <th>discount</th>
-          <th>qualityInventory</th>
-          <th>description</th>
-          <th>action</th>
+          <th class="border py-2 px-4">ID</th>
+          <th class="border py-2 px-4">Product Name</th>
+          <th class="border py-2 px-4">Category</th>
+          <th class="border py-2 px-4">Price</th>
+          <th class="border py-2 px-4">Discount</th>
+          <th class="border py-2 px-4">Quality Inventory</th>
+          <th class="border py-2 px-4">Description</th>
+          <th class="border py-2 px-4">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="product in products" :key="product.id">
-          <td>{{ product.id }}</td>
-          <td>{{ product.productName }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.discount }}<span>%</span></td>
-          <td>{{ product.quality }}</td>
-          <td>{{ product.description }}</td>
-          <td>
-            <button @click="deleteProduct(product.id)" class="btn-delete">Delete</button>
-            <button @click="editProduct(product.id)" class="btn-update">Update</button>
+          <td class="border py-2 px-4 text-center">{{ product.id }}</td>
+          <td class="border py-2 px-4 text-center">{{ product.productName }}</td>
+          <td class="border py-2 px-4 text-center">{{ product.category }}</td>
+          <td class="border py-2 px-4 text-center">{{ product.price }}</td>
+          <td class="border py-2 px-4 text-center">{{ product.discount }}<span class="text-gray-500">%</span></td>
+          <td class="border py-2 px-4 text-center">{{ product.quality }}</td>
+          <td class="border py-2 px-4 text-center">{{ product.description }}</td>
+          <td class="border py-2 px-4 text-center">
+            <button @click="deleteProduct(product.id)"
+              class="bg-red-500 text-white py-2 px-4 rounded cursor-pointer">Delete</button>
+            <button @click="editProduct(product.id)"
+              class="bg-blue-500 text-white py-2 px-4 rounded cursor-pointer ml-10">Update</button>
           </td>
         </tr>
       </tbody>
@@ -76,42 +77,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-table th,
-.admin-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.btn-delete,
-.btn-update {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  margin-right: 5px;
-  cursor: pointer;
-}
-.add-data{
-    
-    display:flex;
-    justify-content: space-between;
-  }
-  .btn-add{
-    background-color: rgb(0, 99, 0);
-    color: white;
-    cursor: pointer;
-    padding: 5px 10px;
-   margin-bottom: 5px;
-  }
-
-.btn-update {
-  background-color: #3498db;
-}
-</style>
