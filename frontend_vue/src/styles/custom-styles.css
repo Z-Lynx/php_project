@@ -1,0 +1,142 @@
+/* custom-styles.css */
+
+.dotted-line {
+  height: 15px;
+  margin-bottom: 30px;
+  border-bottom: 3px dashed #ea8b71; 
+  width: 100%;
+}
+
+.pd {
+  padding-top: 30px;
+  padding-left: 17%;
+  color: #000000; 
+  font-size: 35px; 
+  font-weight: bold;
+}
+
+
+.w-41 {
+  height: 200px;
+  margin: 300px;
+}
+
+.prd {
+  margin: 5
+  0px;
+  padding-left: 10px;
+  font-size: 40px;
+
+}
+.PMD {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 500px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+  color: #a5a4a4 ;
+}
+.PM{
+  color: #000000; 
+  font-size: 25px; 
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.ET{
+  color: #000000; 
+  font-size: 25px; 
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-left: 25px;
+}
+.line {
+  height: 1px;
+  margin: 1px;
+  border: 1px solid  #a5a4a4;  
+  width: 40%;
+  border-bottom-width: 0px;
+}
+
+
+.input-container {
+  color: #807e7e;
+  display: flex;
+  align-items: center;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  width: 60%;
+  margin: 10px;
+}
+
+.input-container.active {
+  border-color: #ea8b71;
+}
+
+.input-container.active input {
+  color: #ea8b71;
+}
+
+
+input {
+  border: none;
+  outline: none;
+  width: 90%;
+  padding: 5px;
+}
+
+.delete-icon {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 100% ;
+  display: inline-flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+
+button {
+  margin-top:20px ; 
+  margin-bottom: 100px;
+  margin-left: 140px;
+  margin-right: -130px;
+  width: 149px;
+  height: 39px;
+  border-radius: 10px;
+  background-color: #ea8b71;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 5px 10px;
+  border: 1px solid #ea8b71; 
+
+}
+
+button:hover {
+  background-color: #ffffff;
+  color: #ea8b71;
+}
+
+.checkbox-container {
+  align-items: center;
+}
+
+.checkbox-input {
+  background-color: #000000;
+  margin-left: 10px;
+  margin-right: 10px; 
+  width: 20px;
+  height: 20px;
+}
+.checkbox-label {
+  color: #807e7e;
+}
+
+.SG{
+
+  display: flex;
+  align-items: center;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  width: 17.5%;
+  margin: 10px;
+}
