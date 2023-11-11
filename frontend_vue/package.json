@@ -8,9 +8,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@progress/kendo-theme-default": "^7.0.2",
-    "@progress/kendo-vue-buttons": "^4.0.0",
-    "@progress/kendo-vue-layout": "^4.0.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vuex": "^4.0.2"
