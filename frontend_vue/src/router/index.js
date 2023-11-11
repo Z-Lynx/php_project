@@ -3,6 +3,7 @@ import Products from "../views/Products/Products.vue";
 import ProductDetails from "../views/ProductDetails/ProductDetails.vue";
 import Login from "../views/auth/Login.vue";
 import Register from "../views/auth/Register.vue";
+import Checkout from "../views/Checkout/Checkout.vue";
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     name: "product-details",
     component: ProductDetails,
     path: "/product-details/:id",
+  },
+  {
+    name: "checkout",
+    component: Checkout,
+    path: "/checkout",
   },
 ];
 
