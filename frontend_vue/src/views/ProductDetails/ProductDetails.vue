@@ -3,7 +3,7 @@
     <main>
       <h1 class="font-bold text-lg">Product Detail</h1>
       <div class="border-t border-dashed border-red-500"></div>
-      <div class="flex justify-between">
+      <div class="flex justify-between pt-3">
         <div v-for="(image, index) in singleImage" :key="index" class="flex flex-col items-center">
           <div class="bg-gray-200 rounded p-2">
             <img :src="image.avatar" :eager="true" class="w-full h-full" />
@@ -14,7 +14,7 @@
             </div>
           </div>
         </div>
-        <div class="flex flex-col justify-between ml-4">
+        <div class="flex flex-col ml-4 space-y-6">
           <div>
             <h1 class="text-lg">
               Swiss Made Vegetable <br />
@@ -30,8 +30,8 @@
             </div>
           </div>
           <p class="text-gray-600 mt-4 leading-6">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Rem sint fugit quis animi, neque quaerat eaque iure praesentium eum temporibus. Corrupti quod eos vitae voluptatem corporis repellendus natus commodi inventore.</p>
-          <div>
-            <button class="bg-gray-300 text-orange-500 font-semibold">Add to Cart</button>
+          <div class="w-full flex items-center justify-center">
+            <button class="w-full bg-black text-white px-6 py-4">Add to Cart</button>
           </div>
         </div>
       </div>
