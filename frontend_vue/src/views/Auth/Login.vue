@@ -22,36 +22,54 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isSumbit: false,
-      formData: {
-        email: "",
-        password: "",
-      },
+<script setup>
+import { ref, computed } from "vue";
+import AuthService from "../../services/auth.service";
+import { useToast } from "primevue/usetoast";
+import { useRouter } from 'vue-router'; // Import the useRouter function
+
+const router = useRouter(); 
+const toast = useToast();
+const isSumbit = ref(false);
+const formData = ref({
+  email: "",
+  password: "",
+});
+
+const isEmailValid = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(formData.value.email);
+});
+
+const isPasswordValid = computed(() => {
+  return formData.value.password.length >= 6;
+});
+
+const isFormValid = computed(() => {
+  return isEmailValid.value && isPasswordValid.value;
+});
+
+const login = () => {
+  isSumbit.value = true;
+  if (isFormValid.value) {
+    const user = {
+      username: formData.value.email,
+      password: formData.value.password,
     };
-  },
-  computed: {
-    isEmailValid() {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(this.formData.email);
-    },
-    isPasswordValid() {
-      return this.formData.password.length >= 6;
-    },
-    isFormValid() {
-      return this.isEmailValid && this.isPasswordValid;
-    },
-  },
-  methods: {
-    login() {
-      this.isSumbit = true;
-      if (this.isFormValid) {
-        console.log("Login:", this.formData);
-      }
-    },
-  },
+
+    AuthService.login(user)
+      .then((response) => {
+        router.push("/");
+      })
+      .catch((error) => {
+        // Handle login error
+        toast.add({
+          severity: "error",
+          summary: "Login failed",
+          detail: error.response.data.error,
+          life: 2500,
+        });
+      });
+  }
 };
 </script>

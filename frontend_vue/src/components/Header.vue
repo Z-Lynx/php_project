@@ -1,7 +1,5 @@
 <script setup>
-import { computed } from "vue";
 import Logo from "./Logo.vue";
-import store from "../store";
 import Search from "./Search.vue";
 import Profile from "./Profile.vue";
 </script>
