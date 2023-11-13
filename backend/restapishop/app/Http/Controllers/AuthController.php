@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Password;
+use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -9,7 +11,6 @@ use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -21,7 +22,7 @@ class AuthController extends Controller
         if (!$request->header('Authorization')) {
             return $this->errorResponse('Unauthorized', 401);
         }
-        return $this->successResponse(new UserResource($request->user()) , 'message', 200);
+        return $this->successResponse(new UserResource($request->user()), 'message', 200);
     }
     public function login(LoginUserRequest $request)
     {
@@ -47,6 +48,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         return $this->successResponse([
             'user' => new UserResource($user),
             'token' => $user->createToken('API TOKEN OF ' . $user->name)->plainTextToken,
@@ -55,12 +58,20 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        
+
         return $this->successResponse('', 'Log Out Success', 200);
     }
-    public function forget_password()
+    public function forget_password(ForgetPasswordRequest $request)
     {
-        return $this->successResponse('', 'message', 200);
+        $request->validated();
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+        
+        return $status === Password::RESET_LINK_SENT
+            ? $this->successResponse('', 'Send Reset Password Success', 200)
+            : $this->errorResponse('Send Reset Password Fail', 400);
     }
 
 }
