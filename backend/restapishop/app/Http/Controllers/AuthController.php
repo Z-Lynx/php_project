@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class AuthController extends Controller
         if (!$request->header('Authorization')) {
             return $this->errorResponse('Unauthorized', 401);
         }
-        return $this->successResponse($request->user(), 'message', 200);
+        return $this->successResponse(new UserResource($request->user()) , 'message', 200);
     }
     public function login(LoginUserRequest $request)
     {
@@ -32,7 +33,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->firstOrFail();
 
         return $this->successResponse([
-            'user' => $user,
+            'user' => new UserResource($request->user()),
             'token' => $user->createToken('API TOKEN OF ' . $user->name)->plainTextToken,
         ], 'message', 200);
     }
@@ -47,7 +48,7 @@ class AuthController extends Controller
         ]);
 
         return $this->successResponse([
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $user->createToken('API TOKEN OF ' . $user->name)->plainTextToken,
         ], 'message', 200);
     }
@@ -61,4 +62,5 @@ class AuthController extends Controller
     {
         return $this->successResponse('', 'message', 200);
     }
+
 }
