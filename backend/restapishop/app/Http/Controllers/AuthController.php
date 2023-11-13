@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Support\Facades\Password;
 use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginUserRequest;
@@ -11,6 +12,7 @@ use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class AuthController extends Controller
@@ -68,10 +70,29 @@ class AuthController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
-        
+
         return $status === Password::RESET_LINK_SENT
             ? $this->successResponse('', 'Send Reset Password Success', 200)
             : $this->errorResponse('Send Reset Password Fail', 400);
+    }
+
+    public function reset_password(ResetPasswordRequest $request)
+    {
+        $request->validated();
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? $this->successResponse('', 'Update Password Success', 200)
+            : $this->errorResponse('Update Password Fail', 400);
     }
 
 }

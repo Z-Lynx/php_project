@@ -20,9 +20,10 @@ Route::post(
     [AuthController::class, 'forget_password']
 )->middleware('guest')->name('password.email');
 
-Route::get('/reset-password/{token}', function ($token) {
-    return view('auth.reset-password', ['token' => $token]);
-})->middleware('guest')->name('password.reset');
+Route::post(
+    '/reset_password',
+    [AuthController::class, 'reset_password']
+)->middleware('guest')->name('password.update');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
