@@ -23,8 +23,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'name',
         'email',
         'password',
-        'is_admin',
         'avatar',
+        'github_id',
+        'auth_type',
+        'is_admin',
     ];
 
     /**
@@ -55,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         static::creating(function ($user) {
             $user->is_admin = false;
             $user->avatar = 'default_avatar.jpg';
+            $user->auth_type = 'email';
         });
     }
 }
