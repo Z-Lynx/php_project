@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         return $this->successResponse([
             'user' => new UserResource($request->user()),
-            'token' => $user->createToken('Token Auth ' . $user->name)->plainTextToken,
+            'token' => $user->createToken('Token Auth: ' . $user->name)->plainTextToken,
         ], 'message', 200);
     }
     public function register(StoreUserRequest $request)

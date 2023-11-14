@@ -57,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         static::creating(function ($user) {
             $user->is_admin = false;
             $user->avatar = 'default_avatar.jpg';
-            $user->auth_type = 'email';
+            $user->auth_type = 'auth';
         });
     }
 }

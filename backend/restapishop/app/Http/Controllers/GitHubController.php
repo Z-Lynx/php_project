@@ -39,10 +39,11 @@ class GitHubController extends Controller
             'auth_type' => 'github',
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
+            'email_verified_at' => now(),
             'password' => Hash::make(Str::random(10)),
         ]);
 
-        $token = $user->createToken('Token GitHub' . $user->name)->plainTextToken;
+        $token = $user->createToken('Token GitHub: ' . $user->name)->plainTextToken;
 
         return $this->successResponse([
             'user' => new UserResource($user),
