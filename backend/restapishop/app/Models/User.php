@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'google_id',
         'auth_type',
         'is_admin',
+        'email_verified_at',
     ];
 
     /**
@@ -57,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
         static::creating(function ($user) {
             $user->is_admin = false;
-            $user->avatar = 'default_avatar.jpg';
+            $user->avatar = $user->avatar === null ? 'default_avatar.jpg' : $user->avatar;
             $user->auth_type = 'auth';
         });
     }

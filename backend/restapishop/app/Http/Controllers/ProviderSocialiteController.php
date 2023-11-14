@@ -22,18 +22,13 @@ class ProviderSocialiteController extends Controller
     public function callback($provider)
     {
         $providerUser = Socialite::driver($provider)->stateless()->user();
-        $avatarUrl = $providerUser->getAvatar();
-
-        $contents = file_get_contents($avatarUrl);
-        $fileName = $providerUser->getId() . '.jpg';
-        Storage::disk('public')->put($fileName, $contents);
 
         $user = User::updateOrCreate([
             $provider . '_id' => $providerUser->id,
         ], [
             'name' => $providerUser->name,
             'email' => $providerUser->email === null ? $providerUser->nickname : $providerUser->email,
-            'avatar' => $fileName,
+            'avatar' => $providerUser->getAvatar(),
             'auth_type' => $provider,
             $provider . '_token' => $providerUser->token,
             'email_verified_at' => now(),

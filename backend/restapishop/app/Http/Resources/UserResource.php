@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'is_active' => $this->email_verified_at !== null,
-            'avatar' => url('/api/images/' . basename($this->avatar)),
+            'avatar' => filter_var($this->avatar, FILTER_VALIDATE_URL) ? $this->avatar : url('/api/images/' . basename($this->avatar)),
             'is_admin' => $this->is_admin,
         ];
     }
