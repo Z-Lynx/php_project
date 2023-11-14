@@ -23,6 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'name',
         'email',
         'password',
+        'is_admin',
+        'avatar',
     ];
 
     /**
@@ -45,4 +47,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->is_admin = false;
+            $user->avatar = 'default_avatar.jpg';
+        });
+    }
 }

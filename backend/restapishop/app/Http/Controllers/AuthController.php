@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 class AuthController extends Controller
@@ -95,4 +96,17 @@ class AuthController extends Controller
             : $this->errorResponse('Update Password Fail', 400);
     }
 
+    public function getImage($filename)
+    {
+        $path = "public/{$filename}";
+
+        if (!Storage::exists($path)) {
+            return $this->errorResponse('NOT FOUND', 404);
+        }
+
+        $file = Storage::get($path);
+        $mime = Storage::mimeType($path);
+
+        return response($file)->header('Content-Type', $mime);
+    }
 }

@@ -25,6 +25,8 @@ Route::post(
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
+Route::get('/images/{filename}', [AuthController::class, 'getImage'])->middleware('guest');
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
