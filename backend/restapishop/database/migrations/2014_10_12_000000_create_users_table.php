@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('avatar');
             $table->boolean('is_admin');
             $table->string('github_id')->nullable();
+            $table->string('google_id')->nullable();
             $table->string('auth_type');
             $table->rememberToken();
             $table->timestamps();

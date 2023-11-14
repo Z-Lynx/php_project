@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'avatar',
         'github_id',
+        'google_id',
         'auth_type',
         'is_admin',
     ];
