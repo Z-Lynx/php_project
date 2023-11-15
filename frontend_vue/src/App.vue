@@ -1,9 +1,9 @@
 <script setup>
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
+import { computed } from "vue";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Toast from "primevue/toast";
+import store from "./store";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAd0F-UNRaEoy9mwqV_yLOB5ik6IGGhUsw",
@@ -18,13 +18,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const data = store.getters.getUser;
+if (data.token) {
+  store.dispatch("getUser");
+}
 </script>
 
 <template>
+  <pre>{{ data }}</pre>
   <Toast />
-  <Header />
   <RouterView />
-  <div class="pt-10">
-    <Footer />
-  </div>
 </template>

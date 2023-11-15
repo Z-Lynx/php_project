@@ -8,46 +8,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ProductCard from "../../components/ProductCard.vue";
 
-export default {
-  components: {
-    ProductCard,
+const products = [
+  {
+    id: 1,
+    name: "Product 1",
+    description: "Description for Product 1",
+    price: 100,
+    image: "logo.png",
   },
-  data() {
-    return {
-      products: [
-        {
-          id: 1,
-          name: "Product 1",
-          description: "Description for Product 1",
-          price: 100,
-          image: "logo.png",
-        },
-        {
-          id: 2,
-          name: "Product 2",
-          description: "Description for Product 2",
-          price: 150,
-          image: "logo.png",
-        },
-        {
-          id: 3,
-          name: "Product 3",
-          description: "Description for Product 3",
-          price: 200,
-          image: "logo.png",
-        },
-        {
-          id: 4,
-          name: "Product 4",
-          description: "Description for Product 4",
-          price: 250,
-          image: "logo.png",
-        },
-      ],
-    };
+  {
+    id: 2,
+    name: "Product 2",
+    description: "Description for Product 2",
+    price: 150,
+    image: "logo.png",
   },
-};
+  {
+    id: 3,
+    name: "Product 3",
+    description: "Description for Product 3",
+    price: 200,
+    image: "logo.png",
+  },
+  {
+    id: 4,
+    name: "Product 4",
+    description: "Description for Product 4",
+    price: 250,
+    image: "logo.png",
+  },
+];
 </script>

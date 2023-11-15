@@ -6,8 +6,6 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -36,10 +34,12 @@ class ProviderSocialiteController extends Controller
         ]);
         $token = $user->createToken('Token ' . $provider . ': ' . $user->name)->plainTextToken;
 
-        return $this->successResponse([
-            'user' => new UserResource($user),
-            'token' => $token,
-        ], 'message', 200);
+        return view('callback', [
+            'response' => [
+                'user' => new UserResource($user),
+                'token' => $token,
+            ],
+        ]);
     }
 
 }

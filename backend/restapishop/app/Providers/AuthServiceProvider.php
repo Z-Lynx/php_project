@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
 
             $url = str_replace(
                 url('/api/email/verify/'),
-                'http://localhost:3000/verify',
+                'http://localhost:5173/verify',
                 $url
             );
 
@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         ResetPassword::createUrlUsing(function ($notifiable, $token) {
-            return 'http://localhost:3000/reset-password?token=' . $token;
+            return 'http://localhost:5173/reset-password?token=' . $token;
         });
 
 

@@ -39,7 +39,7 @@ class AuthController extends Controller
         return $this->successResponse([
             'user' => new UserResource($request->user()),
             'token' => $user->createToken('Token Auth: ' . $user->name)->plainTextToken,
-        ], 'message', 200);
+        ], 'Login successful', 200);
     }
     public function register(StoreUserRequest $request)
     {
@@ -56,13 +56,13 @@ class AuthController extends Controller
         return $this->successResponse([
             'user' => new UserResource($user),
             'token' => $user->createToken('API TOKEN OF ' . $user->name)->plainTextToken,
-        ], 'message', 200);
+        ], 'Register successful', 200);
     }
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return $this->successResponse('', 'Log Out Success', 200);
+        return $this->successResponse('', 'LogOut Success', 200);
     }
     public function forget_password(ForgetPasswordRequest $request)
     {

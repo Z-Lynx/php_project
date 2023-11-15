@@ -15,7 +15,7 @@ Route::post('/email/resend', [EmailVerificationController::class, 'resend'])
     ->name('verification.resend');
 
 // socialite
-Route::get('/auth/{provider}', [ProviderSocialiteController::class, 'redirect']);
+Route::get('/auth/{provider}', [ProviderSocialiteController::class, 'redirect'])->middleware('guest');
 Route::get('/auth/{provider}/callback', [ProviderSocialiteController::class, 'callback']);
 
 Route::post('/login', [AuthController::class, 'login']);

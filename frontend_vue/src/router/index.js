@@ -4,37 +4,97 @@ import ProductDetails from "../views/ProductDetails/ProductDetails.vue";
 import Login from "../views/auth/Login.vue";
 import Register from "../views/auth/Register.vue";
 import Checkout from "../views/Checkout/Checkout.vue";
+import NotFound from "../views/NotFound.vue";
+import AppLayout from "../components/AppLayout.vue";
+import AuthLayout from "../components/AuthLayout.vue";
+import VerifyEmail from "../views/auth/VerifyEmail.vue";
 
 const routes = [
   {
-    name: "Login",
-    component: Login,
-    path: "/login",
+    path: "/auth",
+    name: "auth",
+    component: AuthLayout,
+    meta: {
+      requiresGuest: true,
+    },
+    children: [
+      {
+        path: "/login",
+        name: "login",
+        component: Login,
+        meta: {
+          requiresGuest: true,
+        },
+      },
+      {
+        path: "/register",
+        name: "register",
+        component: Register,
+        meta: {
+          requiresGuest: true,
+        },
+      },
+    ],
   },
   {
-    name: "Register",
-    component: Register,
-    path: "/register",
+    path: "/verify/:id/:token",
+    name: "verify",
+    component: VerifyEmail,
+  },
+  // {
+  //   path: "/request-password",
+  //   name: "requestPassword",
+  //   component: RequestPassword,
+  //   meta: {
+  //     requiresGuest: true,
+  //   },
+  // },
+  // {
+  //   path: "/reset-password/:token",
+  //   name: "resetPassword",
+  //   component: ResetPassword,
+  //   meta: {
+  //     requiresGuest: true,
+  //   },
+  // },
+  {
+    path: "/:pathMatch(.*)",
+    name: "notfound",
+    component: NotFound,
   },
   {
-    name: "Home",
-    component: Products,
     path: "/",
+    redirect: "/home",
   },
   {
-    name: "Product",
-    component: Products,
-    path: "/products",
-  },
-  {
-    name: "product-details",
-    component: ProductDetails,
-    path: "/product-details/:id",
-  },
-  {
-    name: "checkout",
-    component: Checkout,
-    path: "/checkout",
+    path: "/",
+    name: "home",
+    component: AppLayout,
+    meta: {
+      requiresGuest: true,
+    },
+    children: [
+      {
+        name: "Home",
+        component: Products,
+        path: "/home",
+      },
+      {
+        name: "Product",
+        component: Products,
+        path: "products",
+      },
+      {
+        name: "product-details",
+        component: ProductDetails,
+        path: "product-details/:id",
+      },
+      {
+        name: "checkout",
+        component: Checkout,
+        path: "checkout",
+      },
+    ],
   },
 ];
 
