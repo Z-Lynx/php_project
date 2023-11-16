@@ -8,6 +8,8 @@ import NotFound from "../views/NotFound.vue";
 import AppLayout from "../components/AppLayout.vue";
 import AuthLayout from "../components/AuthLayout.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
+import ForgotPassword from "../views/auth/ForgotPassword.vue";
+import ResetPassword from "../views/auth/ResetPassword.vue";
 
 const routes = [
   {
@@ -30,6 +32,22 @@ const routes = [
         path: "/register",
         name: "register",
         component: Register,
+        meta: {
+          requiresGuest: true,
+        },
+      },
+      {
+        path: "/forgot_password",
+        name: "forgotPassword",
+        component: ForgotPassword,
+        meta: {
+          requiresGuest: true,
+        },
+      },
+      {
+        path: "/reset-password",
+        name: "reset-password",
+        component: ResetPassword,
         meta: {
           requiresGuest: true,
         },

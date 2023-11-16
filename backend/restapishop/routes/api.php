@@ -22,8 +22,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::post(
-    '/forget_password',
-    [AuthController::class, 'forget_password']
+    '/forgot_password',
+    [AuthController::class, 'forgot_password']
 )->middleware('guest')->name('password.email');
 
 Route::post(

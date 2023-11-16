@@ -1,4 +1,6 @@
 <template>
+  <h2 class="flex items-center justify-center text-2xl font-semibold">Welcome back</h2>
+  <h2 class="flex items-center justify-center mb-6 text-xl font-semibold">TSC Shop</h2>
   <form @submit.prevent="register">
     <div class="mb-4">
       <label for="email" class="mb-2 block text-sm text-gray-600">Email</label>
@@ -65,7 +67,7 @@ const isPasswordValid = computed(() => {
 });
 
 const isFormValid = computed(() => {
-  return isEmailValid.value && isPasswordValid.value;
+  return isEmailValid.value && isPasswordValid.value && isUsernameValid.value && formData.value.password === formData.value.password_confirmation;
 });
 
 const isUsernameValid = computed(() => {
@@ -77,7 +79,7 @@ const register = () => {
 
   if (isFormValid.value) {
     isLoading.value = true;
-    
+
     const user = {
       name: formData.value.name,
       email: formData.value.email,
@@ -96,6 +98,7 @@ const register = () => {
         router.push("/");
       })
       .catch((error) => {
+        isLoading.value = false;
         toast.add({
           severity: "error",
           summary: "Register failed",

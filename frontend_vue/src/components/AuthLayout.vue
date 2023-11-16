@@ -4,12 +4,9 @@
       <i class="fa-solid fa-2x fa-arrow-left"></i>
     </router-link>
     <div class="rounded bg-white p-8 shadow-md w-[400px]">
-      <h2 class="flex items-center justify-center text-2xl font-semibold">Welcome back</h2>
-      <h2 class="flex items-center justify-center mb-6 text-xl font-semibold">TSC Shop</h2>
-
       <RouterView />
       <!-- Or -->
-      <div class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-gray-500 dark:after:border-gray-500">
+      <div class="mb-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-gray-500 dark:after:border-gray-500">
         <p class="mx-4 mb-0 text-center text-sm text-gray-400 dark:text-gray-400">or</p>
       </div>
 

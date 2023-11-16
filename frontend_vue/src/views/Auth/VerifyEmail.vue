@@ -13,7 +13,6 @@ import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import AuthService from "../../services/auth.service";
 import Logo from "../../components/Logo.vue";
-import store from "../../store";
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();

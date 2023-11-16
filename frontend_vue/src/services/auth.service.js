@@ -52,6 +52,20 @@ class AuthService {
       return response.data;
     });
   }
+
+  forgotPassword(email) {
+    return AxiosCustom.post("forgot_password", {
+      email: email,
+    }).then((response) => {
+      return response.data;
+    });
+  }
+
+  resetPassword(payload) {
+    return AxiosCustom.post("reset_password", payload).then((response) => {
+      return response.data;
+    });
+  }
 }
 
 export default new AuthService();

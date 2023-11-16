@@ -1,4 +1,6 @@
 <template>
+  <h2 class="flex items-center justify-center text-2xl font-semibold">Welcome back</h2>
+  <h2 class="flex items-center justify-center mb-6 text-xl font-semibold">TSC Shop</h2>
   <form @submit.prevent="login">
     <div class="mb-4">
       <label for="phone" class="mb-2 block text-sm text-gray-600">Email</label>
@@ -11,7 +13,9 @@
       <input v-model="formData.password" type="password" id="password" name="password" class="w-full rounded border p-2" />
       <span v-if="isSumbit && !isPasswordValid" class="text-red-500 text-sm">Password must be at least 6 characters long.</span>
     </div>
-
+    <div class="mb-2 flex justify-end">
+      <router-link to="/forgot_password" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"> Forgot password? </router-link>
+    </div>
     <button type="submit" class="mb-2 w-full rounded bg-green-500 p-2 text-white">
       <div class="flex justify-center items-center" v-if="isLoading"><LoadingSpiner /></div>
       <div v-else>Login</div>
@@ -73,6 +77,7 @@ const login = () => {
         router.push("/");
       })
       .catch((error) => {
+        isLoading.value = false;
         // Handle login error
         toast.add({
           severity: "error",

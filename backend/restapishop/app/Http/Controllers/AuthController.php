@@ -64,7 +64,7 @@ class AuthController extends Controller
 
         return $this->successResponse('', 'LogOut Success', 200);
     }
-    public function forget_password(ForgetPasswordRequest $request)
+    public function forgot_password(ForgetPasswordRequest $request)
     {
         $request->validated();
 
