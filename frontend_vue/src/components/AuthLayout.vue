@@ -60,6 +60,7 @@ const loginWithGithub = () => {
 const loginWithGmail = () => {
   openWindow(`http://localhost:8000/api/auth/google/`, "Login with Google", { width: 500, height: 600 });
 };
+
 function openWindow(url, title, options = {}) {
   if (typeof url === "object") {
     options = url;

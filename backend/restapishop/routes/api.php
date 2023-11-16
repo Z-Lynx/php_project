@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProviderSocialiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::get('/auth/{provider}/callback', [ProviderSocialiteController::class, 'ca
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+// forget password
 Route::post(
     '/forgot_password',
     [AuthController::class, 'forgot_password']
@@ -31,10 +33,16 @@ Route::post(
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
+// public get images
 Route::get('/images/{filename}', [AuthController::class, 'getImage'])->middleware('guest');
 
+
+// middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+// payment
+Route::get('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+Route::get('/vnpay_payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');

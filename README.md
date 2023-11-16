@@ -37,7 +37,7 @@
 | Shop               | ![Shop](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Detail             | ![Detail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Cart               | ![Cart](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
-| PayPal Integration | ![PayPal Integration](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChangesGrey.svg)      |
+| PayPal Integration | ![PayPal Integration](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)      |
 
 ## Git Workflow
 
