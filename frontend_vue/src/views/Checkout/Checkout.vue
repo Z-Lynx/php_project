@@ -115,16 +115,15 @@
 
           <!-- Các nút điều hướng -->
           <div class="flex mt-5 mb-10 h-10 -ml-24 ">
-            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid bg-[#ea8b71] hover:bg-white hover:text-[#ea8b71]">Back</button>
+            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid hover:bg-white hover:text-[#ea8b71]">Back</button>
             <div class="mx-1"></div>
-            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid bg-[#ea8b71] hover:bg-white hover:text-[#ea8b71]">Submit</button>
+            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid hover:bg-white hover:text-[#ea8b71]">Submit</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script setup></script>
 
 <style>
