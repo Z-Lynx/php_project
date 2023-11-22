@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\imgCC;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderSocialiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,14 +35,18 @@ Route::post(
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
-// public get images
+// public client
 Route::get('/images/{filename}', [AuthController::class, 'getImage'])->middleware('guest');
 
+// Route get products
+Route::get('/products', [ProductController::class, 'index']);
 
 // middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::resource('/products', ProductController::class);
 });
 
 // payment

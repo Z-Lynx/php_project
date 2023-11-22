@@ -27,6 +27,7 @@ class AuthController extends Controller
         }
         return $this->successResponse(new UserResource($request->user()), 'message', 200);
     }
+
     public function login(LoginUserRequest $request)
     {
         $request->validated($request->all());
@@ -41,6 +42,7 @@ class AuthController extends Controller
             'token' => $user->createToken('Token Auth: ' . $user->name)->plainTextToken,
         ], 'Login successful', 200);
     }
+
     public function register(StoreUserRequest $request)
     {
         $request->validated($request->all());
@@ -64,6 +66,7 @@ class AuthController extends Controller
 
         return $this->successResponse('', 'LogOut Success', 200);
     }
+
     public function forgot_password(ForgetPasswordRequest $request)
     {
         $request->validated();
@@ -98,15 +101,29 @@ class AuthController extends Controller
 
     public function getImage($filename)
     {
-        $path = "public/{$filename}";
+        $publicPath = "public/{$filename}";
 
-        if (!Storage::exists($path)) {
-            return $this->errorResponse('NOT FOUND', 404);
+        if (Storage::exists($publicPath)) {
+            $file = Storage::get($publicPath);
+            $mime = Storage::mimeType($publicPath);
+
+            return response($file)->header('Content-Type', $mime);
         }
 
-        $file = Storage::get($path);
-        $mime = Storage::mimeType($path);
+        $directories = Storage::directories('public');
 
-        return response($file)->header('Content-Type', $mime);
+        foreach ($directories as $directory) {
+            $path = $directory . '/' . $filename;
+
+            if (Storage::exists($path)) {
+                $file = Storage::get($path);
+                $mime = Storage::mimeType($path);
+
+                return response($file)->header('Content-Type', $mime);
+            }
+        }
+
+        return $this->errorResponse('NOT FOUND', 404);
     }
+
 }
