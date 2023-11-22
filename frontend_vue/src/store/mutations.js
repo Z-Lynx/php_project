@@ -14,6 +14,8 @@ export function setUser(state, payload) {
 }
 
 export function removeUser(state) {
+  localStorage.removeItem("user");
+  Cookies.remove("token");
   state.user.data = null;
   state.user.token = null;
 }

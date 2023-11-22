@@ -1,9 +1,12 @@
 import authService from "../services/auth.service";
 
-export function getUser({ commit }) {
-  authService.getUser().then((response) => {
-    commit("getUser", response.data);
-  });
+export async function getUser({ commit })  {
+  try{
+   const resData = await authService.getUser();
+   commit("getUser", resData.data);
+  }catch(e){
+    commit("removeUser");
+  } 
 }
 
 export function setUser({ commit }, payload) {
