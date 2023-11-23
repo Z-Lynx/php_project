@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { RouterView, createRouter, createWebHistory } from "vue-router";
 import Products from "../views/Products/Products.vue";
 import ProductDetails from "../views/ProductDetails/ProductDetails.vue";
 import Login from "../views/auth/Login.vue";
@@ -10,6 +10,7 @@ import AuthLayout from "../components/AuthLayout.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
+import Review from "../views/Review/Review.vue";
 
 const routes = [
   {
@@ -104,7 +105,7 @@ const routes = [
       },
       {
         name: "product-details",
-        component: ProductDetails,
+        component: Review,
         path: "product-details/:id",
       },
       {

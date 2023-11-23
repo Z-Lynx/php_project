@@ -32,14 +32,14 @@ return [
     ],
 
     'github' => [
-        'client_id' => 'Iv1.53323b92e1a51ca3',
-        'client_secret' => '4dc95e4bef8d8937371e24252b610bf80054073d',
-        'redirect' => 'http://localhost:8000/api/auth/github/callback',
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI'),
     ],
 
     'google' => [
-        'client_id' => '392224068862-t12h6b6fgd9nbem3keshg03ltnpvoob5.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'http://localhost:8000/api/auth/google/callback',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 ];
