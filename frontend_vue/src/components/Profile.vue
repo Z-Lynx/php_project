@@ -2,10 +2,26 @@
   <div class="flex items-center space-x-3">
     <div v-if="user !== null" class="relative">
       <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-bell fa-2x"></i>
+        <button @click="showNotifications">
+          <i class="fa-solid fa-bell fa-2x"></i>
+        </button>
         <button @click="showMenuProfile" type="button" class="flex text-sm bg-gray-800 rounded md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
           <img id="user-menu-button" class="w-10 h-10 rounded" :src="user.avatar" alt="User Avatar" />
         </button>
+      </div>
+      <div v-show="isNotifications" class="overflow-auto pb-5 min-w-[250px] max-h-[250px] absolute right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+        <div class="px-4 py-3">
+          <div class="text-lg font-semibold flex justify-center">Thông báo</div>
+          <div v-for="item in notifications" class="flex items-center justify-between pb-2">
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full mr-2" v-bind:class="item.type === 'success' ? 'bg-green-500' : 'bg-gray-500'"></div>
+              <a @click="handleReadNotifications(item)" class="max-w-[150px] text-ellipsis block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                {{ item.data }}
+              </a>
+            </div>
+            <div v-bind:class="item.read_at ? '' : 'bg-blue-500'" class="flex w-3 h-3 rounded-full"></div>
+          </div>
+        </div>
       </div>
       <div v-show="isMenuVisible" class="min-w-[200px] max-w-[200px] absolute right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
         <div class="px-4 py-3">
@@ -47,7 +63,9 @@ import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
 const isMenuVisible = ref(false);
+const isNotifications = ref(false);
 const user = computed(() => store.state.user.data);
+const notifications = computed(() => store.state.user.notifications);
 
 const menuItems = [
   { id: "settings", label: "Settings", link: "#1" },
@@ -62,7 +80,14 @@ const menuAdminItems = [
 
 const showMenuProfile = () => {
   isMenuVisible.value = !isMenuVisible.value;
+  isNotifications.value = false;
 };
+
+const showNotifications = () => {
+  isNotifications.value = !isNotifications.value;
+  isMenuVisible.value = false;
+};
+
 const handleRouter = (item) => {
   if (item.id === "logout") {
     authService
@@ -102,4 +127,6 @@ const closeMenuOutside = (event) => {
     isMenuVisible.value = false;
   }
 };
+
+const handleReadNotifications = (item) => {};
 </script>

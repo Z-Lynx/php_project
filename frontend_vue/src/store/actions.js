@@ -9,6 +9,15 @@ export async function getUser({ commit })  {
   } 
 }
 
+export async function getNotifications({ commit })  {
+  try{
+   const resData = await authService.getNotifications();
+   commit("getNotifications", resData.data);
+  }catch(e){
+    commit("removeUser");
+  } 
+}
+
 export function setUser({ commit }, payload) {
   commit("setUser", payload);
 }
@@ -19,4 +28,8 @@ export function removeUser({ commit }) {
 
 export function changeStatusActivate({ commit }) {
   commit("changeStatusActivate");
+}
+
+export function updateNotifications({ commit }, payload) {
+  commit("updateNotifications", payload);
 }

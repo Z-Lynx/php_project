@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\imgCC;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderSocialiteController;
@@ -39,13 +40,16 @@ Route::post(
 Route::get('/images/{filename}', [AuthController::class, 'getImage'])->middleware('guest');
 
 // Route get products
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index'])->middleware('guest');
 
 // middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    Route::get('/notifications', [NotificationController::class, 'getNotifications']);
+    Route::post('/notifications/{id}', [NotificationController::class, 'readNotification']);
+    Route::post('/send_notifications', [NotificationController::class, 'sendNotifications']);
     Route::resource('/products', ProductController::class);
 });
 

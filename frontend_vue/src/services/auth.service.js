@@ -35,7 +35,7 @@ class AuthService {
       password: user.password,
     }).then((response) => {
       store.dispatch("setUser", response.data.data);
-
+      store.dispatch("getNotifications");
       return response.data;
     });
   }
@@ -63,6 +63,12 @@ class AuthService {
 
   resetPassword(payload) {
     return AxiosCustom.post("reset_password", payload).then((response) => {
+      return response.data;
+    });
+  }
+
+  getNotifications() {
+    return AxiosCustom.get("notifications").then((response) => {
       return response.data;
     });
   }

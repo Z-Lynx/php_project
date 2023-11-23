@@ -23,3 +23,11 @@ export function removeUser(state) {
 export function changeStatusActivate(state) {
   state.user.data.is_active = true;
 }
+
+export function getNotifications(state, notifications) {
+  state.user.notifications = notifications;
+}
+
+export function updateNotifications(state, notifications) {
+  state.user.notifications = [...state.user.notifications, notifications]
+}

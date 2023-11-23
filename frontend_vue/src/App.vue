@@ -1,9 +1,10 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Toast from "primevue/toast";
 import store from "./store";
+import Pusher from "pusher-js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAd0F-UNRaEoy9mwqV_yLOB5ik6IGGhUsw",
@@ -21,11 +22,25 @@ const analytics = getAnalytics(app);
 const data = store.getters.getUser;
 if (data.token) {
   store.dispatch("getUser");
+  store.dispatch("getNotifications");
 }
+
+onMounted(() => {
+  console.log("mounted");
+  var pusher = new Pusher("9799d9bf3eb9505ba6a8", {
+    cluster: "ap1",
+  });
+
+  var channel = pusher.subscribe("tsc-notifications");
+
+  channel.bind("send-notifications", function (data) {
+    console.log(data);
+    store.dispatch("updateNotifications", data.data);
+  });
+});
 </script>
 
 <template>
-  <pre>{{ data }}</pre>
   <Toast />
   <RouterView />
 </template>

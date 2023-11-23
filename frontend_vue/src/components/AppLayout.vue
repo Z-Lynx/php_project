@@ -3,7 +3,6 @@
     <div class="flex items-center justify-center w-full">
       <button @click="vnpayTest" class="max-w-[400px] w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">VNPAY TEST</button>
     </div>
-
     <Header />
     <div v-if="data.data !== null && isShow && !data.data.is_active" class="container flex justify-center">
       <div class="relative bg-white p-8 rounded shadow-md w-full">
