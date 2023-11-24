@@ -1,21 +1,21 @@
 import authService from "../services/auth.service";
 
-export async function getUser({ commit })  {
-  try{
-   const resData = await authService.getUser();
-   commit("getUser", resData.data);
-  }catch(e){
+export async function getUser({ commit }) {
+  try {
+    const resData = await authService.getUser();
+    commit("getUser", resData.data);
+  } catch (e) {
     commit("removeUser");
-  } 
+  }
 }
 
-export async function getNotifications({ commit })  {
-  try{
-   const resData = await authService.getNotifications();
-   commit("getNotifications", resData.data);
-  }catch(e){
+export async function getNotifications({ commit }) {
+  try {
+    const resData = await authService.getNotifications();
+    commit("getNotifications", resData.data);
+  } catch (e) {
     commit("removeUser");
-  } 
+  }
 }
 
 export function setUser({ commit }, payload) {
@@ -32,4 +32,8 @@ export function changeStatusActivate({ commit }) {
 
 export function updateNotifications({ commit }, payload) {
   commit("updateNotifications", payload);
+}
+
+export function readNotifications({ commit }, payload) {
+  commit("readNotifications", payload);
 }

@@ -34,16 +34,16 @@ class ProductController extends Controller
     {
         $request->validated();
 
-        $imageName = Str::random(32) . '.' . $request->image_name->getClientOriginalExtension();
-        Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image_name));
+        $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
+        Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image));
 
-        $request->image_name = $imageName;
+        $request->image = $imageName;
 
         // Create the product
         $product = Product::create([
             'name' => $request->name,
             'description' => $request->description,
-            'image_name' => $request->image_name,
+            'image' => $request->image,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
         ]);
@@ -97,12 +97,12 @@ class ProductController extends Controller
             );
         }
 
-        if ($request->hasFile('image_name')) {
-            $imageName = Str::random(32) . '.' . $request->image_name->getClientOriginalExtension();
-            Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image_name));
-            Storage::delete('public/product_image/' . $product->image_name);
+        if ($request->hasFile('image')) {
+            $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image));
+            Storage::delete('public/product_image/' . $product->image);
 
-            $request->image_name = $imageName;
+            $request->image = $imageName;
         }
 
 
@@ -123,7 +123,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // Delete the associated image
-        Storage::delete('public/product_image/' . $product->image_name);
+        Storage::delete('public/product_image/' . $product->image);
 
         $product->delete();
 

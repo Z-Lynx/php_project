@@ -2,8 +2,15 @@
   <div class="flex items-center space-x-3">
     <div v-if="user !== null" class="relative">
       <div class="flex items-center space-x-2">
-        <button @click="showNotifications">
-          <i class="fa-solid fa-bell fa-2x"></i>
+        <button class="relative" @click="showNotifications">
+          <i id="user-notifications" class="fa-solid fa-bell fa-2x"></i>
+          <div v-if="countNotifications > 0" class="absolute top-0 right-0">
+            <div class="bg-red-500 flex justify-center w-4 h-4 rounded-full">
+              <p class="text-sm">
+                {{ countNotifications }}
+              </p>
+            </div>
+          </div>
         </button>
         <button @click="showMenuProfile" type="button" class="flex text-sm bg-gray-800 rounded md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
           <img id="user-menu-button" class="w-10 h-10 rounded" :src="user.avatar" alt="User Avatar" />
@@ -15,11 +22,11 @@
           <div v-for="item in notifications" class="flex items-center justify-between pb-2">
             <div class="flex items-center">
               <div class="w-10 h-10 rounded-full mr-2" v-bind:class="item.type === 'success' ? 'bg-green-500' : 'bg-gray-500'"></div>
-              <a @click="handleReadNotifications(item)" class="max-w-[150px] text-ellipsis block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+              <a class="text-start max-w-[150px] text-ellipsis block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 {{ item.data }}
               </a>
             </div>
-            <div v-bind:class="item.read_at ? '' : 'bg-blue-500'" class="flex w-3 h-3 rounded-full"></div>
+            <button @click="handleReadNotifications(item)" v-bind:class="item.read_at ? '' : 'bg-blue-500'" class="flex w-3 h-3 rounded-full"></button>
           </div>
         </div>
       </div>
@@ -65,7 +72,9 @@ const toast = useToast();
 const isMenuVisible = ref(false);
 const isNotifications = ref(false);
 const user = computed(() => store.state.user.data);
+
 const notifications = computed(() => store.state.user.notifications);
+const countNotifications = computed(() => store.state.user.countNotifications);
 
 const menuItems = [
   { id: "settings", label: "Settings", link: "#1" },
@@ -109,7 +118,7 @@ const handleRouter = (item) => {
           life: 2500,
         });
       });
-    router.push("/login");
+    router.push("auth/login");
   } else {
     router.push(item.link);
   }
@@ -124,9 +133,30 @@ onUnmounted(() => {
 
 const closeMenuOutside = (event) => {
   if (event.srcElement.id !== "user-menu-button") {
-    isMenuVisible.value = false;
-  }
+      isMenuVisible.value = false;
+    }
+    if (event.srcElement.id !== "user-notifications") {
+      isNotifications.value = false;
+    }
 };
 
-const handleReadNotifications = (item) => {};
+const handleReadNotifications = async (item) => {
+  try {
+    const response = await authService.readNotifications(item.id);
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Read notifications successful",
+      life: 2500,
+    });
+    store.dispatch("readNotifications", item.id);
+  } catch (error) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error.response.data.message,
+      life: 2500,
+    });
+  }
+};
 </script>

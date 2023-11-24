@@ -20,9 +20,9 @@ class NotificationController extends Controller
         return $this->successResponse($notificationResources, 'get notifications');
     }
 
-    public function readNotification(Request $request, string $id)
+    public function readNotification(Request $request)
     {
-        $notifications = Notifications::find('id', $id, 'user_id', auth()->user()->id);
+        $notifications = Notifications::find($request->id);
 
         $notifications->update([
             'read_at' => now()

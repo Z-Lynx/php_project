@@ -14,6 +14,7 @@ class AuthService {
       return response.data;
     });
   }
+
   getUser() {
     return AxiosCustom.get("/info").then((response) => {
       return response.data;
@@ -54,7 +55,7 @@ class AuthService {
   }
 
   forgotPassword(email) {
-    return AxiosCustom.post("forgot_password", {
+    return AxiosCustom.post("forgot-password", {
       email: email,
     }).then((response) => {
       return response.data;
@@ -62,7 +63,7 @@ class AuthService {
   }
 
   resetPassword(payload) {
-    return AxiosCustom.post("reset_password", payload).then((response) => {
+    return AxiosCustom.post("reset-password", payload).then((response) => {
       return response.data;
     });
   }
@@ -70,6 +71,12 @@ class AuthService {
   getNotifications() {
     return AxiosCustom.get("notifications").then((response) => {
       return response.data;
+    });
+  }
+
+  readNotifications(payload) {
+    return AxiosCustom.post("notifications",{
+      id: payload,
     });
   }
 }

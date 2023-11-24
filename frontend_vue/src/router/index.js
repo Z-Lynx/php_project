@@ -11,6 +11,10 @@ import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
 import Review from "../views/Review/Review.vue";
+import Admin from "../views/Admin/Admin.vue";
+import Category from "../views/Admin/Category.vue";
+import Product from "../views/Admin/Product.vue";
+import AdminLayout from "../components/admin/AdminLayout.vue";
 
 const routes = [
   {
@@ -22,7 +26,7 @@ const routes = [
     },
     children: [
       {
-        path: "/login",
+        path: "login",
         name: "login",
         component: Login,
         meta: {
@@ -30,7 +34,7 @@ const routes = [
         },
       },
       {
-        path: "/register",
+        path: "register",
         name: "register",
         component: Register,
         meta: {
@@ -38,7 +42,7 @@ const routes = [
         },
       },
       {
-        path: "/forgot_password",
+        path: "forgot_password",
         name: "forgotPassword",
         component: ForgotPassword,
         meta: {
@@ -46,7 +50,7 @@ const routes = [
         },
       },
       {
-        path: "/reset-password",
+        path: "reset-password",
         name: "reset-password",
         component: ResetPassword,
         meta: {
@@ -60,22 +64,6 @@ const routes = [
     name: "verify",
     component: VerifyEmail,
   },
-  // {
-  //   path: "/request-password",
-  //   name: "requestPassword",
-  //   component: RequestPassword,
-  //   meta: {
-  //     requiresGuest: true,
-  //   },
-  // },
-  // {
-  //   path: "/reset-password/:token",
-  //   name: "resetPassword",
-  //   component: ResetPassword,
-  //   meta: {
-  //     requiresGuest: true,
-  //   },
-  // },
   {
     path: "/:pathMatch(.*)",
     name: "notfound",
@@ -84,6 +72,40 @@ const routes = [
   {
     path: "/",
     redirect: "/home",
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminLayout,
+    meta: {
+      requiresAdmin: true,
+    },
+    children: [
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: Admin,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
+        path: "/admin/category",
+        name: "category",
+        component: Category,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
+        path: "/admin/product",
+        name: "product",
+        component: Product,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+    ],
   },
   {
     path: "/",

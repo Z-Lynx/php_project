@@ -21,7 +21,7 @@
     </button>
     <p class="py-2 text-sm font-light text-gray-500 dark:text-gray-400">
       Already have an account?
-      <router-link to="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500"> Sign in </router-link>
+      <router-link to="auth/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500"> Sign in </router-link>
     </p>
   </form>
 </template>

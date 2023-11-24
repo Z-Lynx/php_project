@@ -27,12 +27,12 @@ Route::post('/register', [AuthController::class, 'register']);
 
 // forget password
 Route::post(
-    '/forgot_password',
+    '/forgot-password',
     [AuthController::class, 'forgot_password']
 )->middleware('guest')->name('password.email');
 
 Route::post(
-    '/reset_password',
+    '/reset-password',
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
@@ -48,11 +48,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/notifications', [NotificationController::class, 'getNotifications']);
-    Route::post('/notifications/{id}', [NotificationController::class, 'readNotification']);
-    Route::post('/send_notifications', [NotificationController::class, 'sendNotifications']);
+    Route::post('/notifications', [NotificationController::class, 'readNotification']);
+    Route::post('/send-notifications', [NotificationController::class, 'sendNotifications']);
     Route::resource('/products', ProductController::class);
-});
 
-// payment
-Route::get('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
-Route::get('/vnpay_payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+    // payment
+    Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+    Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+});
