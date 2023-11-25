@@ -5,7 +5,7 @@ import Profile from "./Profile.vue";
 </script>
 
 <template>
-  <header class="container flex items-center">
+  <header class="container flex items-center bg-white border-b h-[80px]">
     <Logo />
     <ul class="flex space-x-6">
       <li>

@@ -9,8 +9,7 @@
 </template>
 
 <script setup>
-import ProductCard from "../../components/ProductCard.vue";
-
+import ProductCard from '../../components/Product/ProductCard.vue';
 const products = [
   {
     id: 1,

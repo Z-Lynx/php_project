@@ -46,13 +46,18 @@ Route::get('/products', [ProductController::class, 'index'])->middleware('guest'
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    // payment
+    Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+    Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'isAdmin']], function () {
 
     Route::get('/notifications', [NotificationController::class, 'getNotifications']);
     Route::post('/notifications', [NotificationController::class, 'readNotification']);
     Route::post('/send-notifications', [NotificationController::class, 'sendNotifications']);
-    Route::resource('/products', ProductController::class);
 
-    // payment
-    Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
-    Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+    Route::resource('/products', ProductController::class);
+    
+
 });

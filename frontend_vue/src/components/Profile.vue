@@ -82,7 +82,7 @@ const menuItems = [
 ];
 
 const menuAdminItems = [
-  { id: "dashboard", label: "Dashboard", link: "#1" },
+  { id: "dashboard", label: "Dashboard", link: "/admin/dashboard" },
   { id: "settings", label: "Settings", link: "#2" },
   { id: "logout", label: "Sign out", link: "#3" },
 ];

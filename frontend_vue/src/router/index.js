@@ -1,12 +1,13 @@
-import { RouterView, createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
+
+import AppLayout from "../components/Guest/AppLayout.vue";
+import AuthLayout from "../components/Guest/AuthLayout.vue";
+
 import Products from "../views/Products/Products.vue";
-import ProductDetails from "../views/ProductDetails/ProductDetails.vue";
 import Login from "../views/auth/Login.vue";
 import Register from "../views/auth/Register.vue";
 import Checkout from "../views/Checkout/Checkout.vue";
 import NotFound from "../views/NotFound.vue";
-import AppLayout from "../components/AppLayout.vue";
-import AuthLayout from "../components/AuthLayout.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
@@ -90,16 +91,40 @@ const routes = [
         },
       },
       {
-        path: "/admin/category",
-        name: "category",
+        path: "categories",
+        name: "categories",
         component: Category,
         meta: {
           requiresAdmin: true,
         },
       },
       {
-        path: "/admin/product",
+        path: "products",
+        name: "products",
+        component: Product,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
+        path: "users",
         name: "product",
+        component: Product,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
+        path: "carts",
+        name: "carts",
+        component: Product,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
+        path: "bills",
+        name: "bills",
         component: Product,
         meta: {
           requiresAdmin: true,

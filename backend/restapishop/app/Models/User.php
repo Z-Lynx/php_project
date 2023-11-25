@@ -62,4 +62,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             $user->auth_type = $user->auth_type === null ? 'auth' : $user->auth_type;
         });
     }
+
+    public function is_admin()
+    {
+        return $this->is_admin;
+    }
 }

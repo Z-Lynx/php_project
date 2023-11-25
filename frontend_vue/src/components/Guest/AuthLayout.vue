@@ -25,7 +25,7 @@ import LoginGmail from "./LoginGmail.vue";
 import LoginGitHub from "./LoginGitHub.vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
-import store from "../store";
+import store from "../../store";
 
 const toast = useToast();
 const router = useRouter();
