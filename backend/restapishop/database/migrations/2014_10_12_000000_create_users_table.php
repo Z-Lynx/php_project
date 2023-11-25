@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar');
-            $table->boolean('is_admin');
+            $table->boolean('is_admin')->default(false);
             $table->string('github_id')->nullable();
             $table->string('google_id')->nullable();
             $table->string('fcm_id')->nullable();

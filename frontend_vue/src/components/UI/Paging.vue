@@ -19,7 +19,6 @@
 </template>
 <script setup>
 import { watch, ref, onMounted } from "vue";
-import { RouterLink } from "vue-router";
 
 const current_page = ref(null);
 const last_page = ref(null);
@@ -45,7 +44,6 @@ watch(
 );
 
 function updateData(data) {
-  console.log(data);
   current_page.value = data.current_page;
   last_page.value = data.last_page;
   next_page_url.value = data.next_page_url;

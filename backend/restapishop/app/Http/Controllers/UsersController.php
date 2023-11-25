@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResources;
+use App\Http\Requests\StoreUserRequest;
 
 class UsersController extends Controller
 {
@@ -38,9 +39,17 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['is_admin'] = null;
+        $user = User::create($data);
+
+        return $this->successResponse(
+            new UsersResources($user),
+            'User created successfully',
+            201
+        );
     }
 
     /**
@@ -62,9 +71,22 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        if (!$user) {
+            return $this->errorResponse(
+                'User not found',
+                404
+            );
+        }
+
+        $user->update($request->all());
+
+        return $this->successResponse(
+            new UsersResources($user),
+            'User updated successfully',
+            200
+        );
     }
 
     /**
@@ -72,6 +94,20 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+        if (!$user) {
+            return $this->errorResponse(
+                'User not found',
+                404
+            );
+        }
+
+        $user->delete();
+
+        return $this->successResponse(
+            null,
+            'User deleted successfully',
+            200
+        );
     }
 }

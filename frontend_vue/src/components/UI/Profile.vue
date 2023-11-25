@@ -143,12 +143,6 @@ const closeMenuOutside = (event) => {
 const handleReadNotifications = async (item) => {
   try {
     const response = await authService.readNotifications(item.id);
-    toast.add({
-      severity: "success",
-      summary: "Success",
-      detail: "Read notifications successful",
-      life: 2500,
-    });
     store.dispatch("readNotifications", item.id);
   } catch (error) {
     toast.add({

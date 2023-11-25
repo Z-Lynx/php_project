@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
-            <button type="button" data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <button @click="showAddUser" type="button" data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
               <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
               Add user
             </button>
@@ -102,19 +102,57 @@
     </div>
 
     <Paging :data="dataPaginated" />
+    <PopupDataItem :data="dataPopUpItem" @submit="callback" />
   </main>
 </template>
 
 <script setup>
 import Breadcrumb from "../../components/UI/Breadcrumb.vue";
 import Paging from "../../components/UI/Paging.vue";
+import PopupDataItem from "../../components/CRUD/PopupDataItem.vue";
 import { onMounted, ref } from "vue";
 import UsersService from "../../services/user.service";
 import { useToast } from "primevue/usetoast";
 import { useRoute } from "vue-router";
 
 const toast = useToast();
+const dataPopUpItem = ref({
+  formDataInputs: [],
+  isShow: false,
+  isCreate: false,
+  title: "",
+});
 
+const formDataInputs = [
+  {
+    id: "name",
+    label: "Name",
+    type: "text",
+    error_label: "Username must be at least 3 characters long.",
+    error: "name",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    error_label: "Email must be valid.",
+    error: "email",
+  },
+  {
+    id: "password",
+    label: "Password",
+    type: "password",
+    error_label: "Password must be at least 6 characters long.",
+    error: "password",
+  },
+  {
+    id: "password_confirmation",
+    label: "Password Confirmation",
+    type: "password",
+    error_label: "Passwords do not match.",
+    error: "confirm_password",
+  },
+];
 const columns = ["name", "is_active", "is_admin", "auth_type", "updated_at", "actions"];
 const data = ref([]);
 const dataPaginated = ref({});
@@ -136,4 +174,18 @@ onMounted(async () => {
     });
   }
 });
+
+const showAddUser = () => {
+  dataPopUpItem.value = {
+    formDataInputs: formDataInputs,
+    isShow: true,
+    isCreate: true,
+    title: "Add User",
+  };
+  console.log(dataPopUpItem.value);
+};
+const callback = async (data) => {
+  console.log(data);
+};
+
 </script>

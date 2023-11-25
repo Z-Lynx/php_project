@@ -120,7 +120,14 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return $this->errorResponse(
+                'Product not found',
+                404
+            );
+        }
 
         // Delete the associated image
         Storage::delete('public/product_image/' . $product->image);

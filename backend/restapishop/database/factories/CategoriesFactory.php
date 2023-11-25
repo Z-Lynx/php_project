@@ -1,13 +1,11 @@
 <?php
 
 namespace Database\Factories;
-
-use App\Models\Categories;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-
+use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Categories;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categories>
  */
 class CategoriesFactory extends Factory
 {
@@ -16,7 +14,6 @@ class CategoriesFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     protected $model = Categories::class;
 
     public function definition(): array

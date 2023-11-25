@@ -1,16 +1,24 @@
 <template>
   <h2 class="mb-6 flex items-center justify-center text-2xl font-semibold">Reset Your Password</h2>
   <form @submit.prevent="resetPassword">
-    <div class="mb-4">
+    <div class="relative mb-4">
       <label for="password" class="mb-2 block text-sm text-gray-600">Password</label>
-      <input v-model="formData.password" type="password" id="password" name="password" class="w-full rounded border p-2" />
+      <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" id="password" name="password" class="w-full rounded border p-2" />
       <span v-if="isSumbit && !isPasswordValid" class="text-red-500 text-sm">Password must be at least 6 characters long.</span>
+      <span @click="toggleShowPasspord" class="absolute top-9 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+        <i v-if="showPassword" class="fa-lg fa-solid fa-eye"></i>
+        <i v-else class="fa-lg fa-solid fa-eye-slash"></i>
+      </span>
     </div>
 
-    <div class="mb-4">
+    <div class="relative mb-4">
       <label for="confirmPassword" class="mb-2 block text-sm text-gray-600">Confirm Password</label>
-      <input v-model="formData.password_confirmation" type="password" id="confirmPassword" name="confirmPassword" class="w-full rounded border p-2" />
+      <input v-model="formData.password_confirmation" :type="showPassword ? 'text' : 'password'" id="confirmPassword" name="confirmPassword" class="w-full rounded border p-2" />
       <span v-if="(isSumbit && !isPasswordValid) || formData.password !== formData.password_confirmation" class="text-red-500 text-sm">Passwords do not match.</span>
+      <span @click="toggleShowPasspord" class="absolute top-9 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+        <i v-if="showPassword" class="fa-lg fa-solid fa-eye"></i>
+        <i v-else class="fa-lg fa-solid fa-eye-slash"></i>
+      </span>
     </div>
 
     <button type="submit" class="mb-2 w-full rounded bg-green-500 p-2 text-white">
@@ -38,6 +46,11 @@ const route = useRoute();
 const toast = useToast();
 const isSumbit = ref(false);
 const isLoading = ref(false);
+const showPassword = ref(false);
+
+const toggleShowPasspord = () => {
+  showPassword.value = !showPassword.value;
+};
 
 const email = ref(route.query.email);
 const token = ref(route.query.token);

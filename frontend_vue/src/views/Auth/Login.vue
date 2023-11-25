@@ -8,13 +8,17 @@
       <span v-if="isSumbit && !isEmailValid" class="text-red-500 text-sm">Please enter a valid email address.</span>
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4 relative">
       <label for="password" class="mb-2 block text-sm text-gray-600">Password</label>
-      <input v-model="formData.password" type="password" id="password" name="password" class="w-full rounded border p-2" />
+      <input v-model="formData.password" :type="showPassword ? 'text' : 'password'" id="password" name="password" class="w-full rounded border p-2" />
       <span v-if="isSumbit && !isPasswordValid" class="text-red-500 text-sm">Password must be at least 6 characters long.</span>
+      <span @click="toggleShowPasspord" class="absolute top-9 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+        <i v-if="showPassword" class="fa-lg fa-solid fa-eye"></i>
+        <i v-else class="fa-lg fa-solid fa-eye-slash"></i>
+      </span>
     </div>
     <div class="mb-2 flex justify-end">
-      <router-link to="auth/forgot_password" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"> Forgot password? </router-link>
+      <router-link to="/auth/forgot_password" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"> Forgot password? </router-link>
     </div>
     <button type="submit" class="mb-2 w-full rounded bg-green-500 p-2 text-white">
       <div class="flex justify-center items-center" v-if="isLoading"><LoadingSpiner /></div>
@@ -22,7 +26,7 @@
     </button>
     <p class="py-4 text-sm font-light text-gray-500 dark:text-gray-400">
       Don't have an account yet?
-      <router-link to="auth/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500"> Sign up </router-link>
+      <router-link to="/auth/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500"> Sign up </router-link>
     </p>
   </form>
 </template>
@@ -38,6 +42,12 @@ const router = useRouter();
 const toast = useToast();
 const isSumbit = ref(false);
 const isLoading = ref(false);
+const showPassword = ref(false);
+
+const toggleShowPasspord = () => {
+  showPassword.value = !showPassword.value;
+};
+
 const formData = ref({
   email: "",
   password: "",
