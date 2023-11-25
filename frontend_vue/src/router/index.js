@@ -16,6 +16,9 @@ import Admin from "../views/Admin/Admin.vue";
 import Category from "../views/Admin/Category.vue";
 import Product from "../views/Admin/Product.vue";
 import AdminLayout from "../components/admin/AdminLayout.vue";
+import Users from "../views/Admin/Users.vue";
+import Carts from "../views/Admin/Carts.vue";
+import Bills from "../views/Admin/Bills.vue";
 
 const routes = [
   {
@@ -109,7 +112,7 @@ const routes = [
       {
         path: "users",
         name: "product",
-        component: Product,
+        component: Users,
         meta: {
           requiresAdmin: true,
         },
@@ -117,7 +120,7 @@ const routes = [
       {
         path: "carts",
         name: "carts",
-        component: Product,
+        component: Carts,
         meta: {
           requiresAdmin: true,
         },
@@ -125,7 +128,7 @@ const routes = [
       {
         path: "bills",
         name: "bills",
-        component: Product,
+        component: Bills,
         meta: {
           requiresAdmin: true,
         },

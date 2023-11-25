@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+img {
+    max-width: unset !important;
+    height: auto;
+}
 .p-toast .p-toast-message .p-toast-message-content {
     padding: 0.5rem !important;
     border-width: 0 0 0 0 !important;

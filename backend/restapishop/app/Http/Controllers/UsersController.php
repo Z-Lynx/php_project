@@ -2,16 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use App\Http\Resources\UsersResources;
 
 class UsersController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $perPage = 20;
+        $users = User::paginate($perPage);
+        $data = UsersResources::collection($users);
+
+        return $this->successResponse(
+            $data,
+            '',
+            200,
+            $users->toArray()
+        );
     }
 
     /**

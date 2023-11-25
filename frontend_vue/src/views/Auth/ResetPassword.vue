@@ -30,7 +30,7 @@
 import { ref, computed } from "vue";
 import AuthService from "../../services/auth.service";
 import { useToast } from "primevue/usetoast";
-import LoadingSpiner from "../../components/LoadingSpiner.vue";
+import LoadingSpiner from "../../components/UI/LoadingSpiner.vue";
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();

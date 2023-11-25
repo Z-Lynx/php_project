@@ -32,7 +32,7 @@ import { ref, computed } from "vue";
 import AuthService from "../../services/auth.service";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
-import LoadingSpiner from "../../components/LoadingSpiner.vue";
+import LoadingSpiner from "../../components/UI/LoadingSpiner.vue";
 
 const router = useRouter();
 const toast = useToast();

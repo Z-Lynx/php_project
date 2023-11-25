@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
-
+use App\Models\Bills;
 class BillsController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $perPage = 20;
+        $bills = Bills::paginate($perPage);
+        
+        return $this->successResponse(
+            $bills->toArray()['data'],
+            '',
+            200,
+            $bills->toArray()
+        );
     }
 
     /**

@@ -27,11 +27,27 @@ export function changeStatusActivate(state) {
 export function getNotifications(state, notifications) {
   state.user.notifications = notifications;
   state.user.countNotifications = notifications.filter((item) => item.read_at === false).length;
+
+  state.user.notifications.sort((a, b) => {
+    var keyA = new Date(a.created_at),
+      keyB = new Date(b.created_at);
+    if (keyA > keyB) return -1;
+    if (keyA < keyB) return 1;
+    return 0;
+  });
 }
 
 export function updateNotifications(state, notifications) {
   state.user.notifications = [...state.user.notifications, notifications];
   state.user.countNotifications += 1;
+  state.user.notifications.sort((a, b) => {
+    var keyA = new Date(a.created_at),
+      keyB = new Date(b.created_at);
+    // Compare the 2 dates
+    if (keyA > keyB) return -1;
+    if (keyA < keyB) return 1;
+    return 0;
+  });
 }
 
 export function readNotifications(state, idNotifications) {

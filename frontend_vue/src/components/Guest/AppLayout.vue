@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-import Header from "../Header.vue";
-import Footer from "../Footer.vue";
+import Header from "../UI/Header.vue";
+import Footer from "../UI/Footer.vue";
 import store from "../../store";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import authService from "../../services/auth.service";

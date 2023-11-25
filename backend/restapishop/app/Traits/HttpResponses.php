@@ -23,6 +23,7 @@ trait HttpResponses
                 'next_page_url' => $pagination['next_page_url'],
                 'prev_page_url' => $pagination['prev_page_url'],
                 'to' => $pagination['to'],
+                'from' => $pagination['from'],
             ];
         }
 

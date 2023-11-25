@@ -51,6 +51,11 @@ Route::post(
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/update-info', [UsersController::class, 'updateInfo']);
+    Route::post('/add-to-cart', [CartsController::class, 'addToCart']);
+    Route::post('/remove-from-cart', [CartsController::class, 'removeFromCart']);
+
     // payment
     Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
     Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');

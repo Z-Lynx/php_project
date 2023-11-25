@@ -61,24 +61,21 @@
                       <label :for="item.id" class="sr-only">checkbox</label>
                     </div>
                   </td>
-                  <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
-                    <img class="w-10 h-10 rounded-full" :src="item.image" />
+                  <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
+                    <img class="w-10 h-10 rounded-full" :src="item.avatar" />
                     <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
                       <div class="text-base font-semibold text-gray-900 dark:text-white">{{ item.name }}</div>
-                      <div class="text-base font-semibold text-gray-900 dark:text-white">{{ item.slug }}</div>
+                      <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ item.email }}</div>
                     </div>
                   </td>
-                  <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                    {{ item.description }}
+                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ item.is_active }}
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.category_id }}
+                    {{ item.is_admin }}
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.price }}
-                  </td>
-                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.sale_price }}
+                    {{ item.auth_type }}
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ item.updated_at }}
@@ -112,23 +109,24 @@
 import Breadcrumb from "../../components/UI/Breadcrumb.vue";
 import Paging from "../../components/UI/Paging.vue";
 import { onMounted, ref } from "vue";
-import ProductsService from "../../services/products.service";
+import UsersService from "../../services/user.service";
 import { useToast } from "primevue/usetoast";
 import { useRoute } from "vue-router";
 
 const toast = useToast();
 
-const columns = ["name", "description", "category_id", "price", "sale_price", "updated_at", "actions"];
+const columns = ["name", "is_active", "is_admin", "auth_type", "updated_at", "actions"];
 const data = ref([]);
 const dataPaginated = ref({});
 const route = useRoute();
+
 const page = ref(route.query.page || 1);
 
 onMounted(async () => {
   try {
-    const products = await ProductsService.getProducts(page.value);
-    data.value = products.data;
-    dataPaginated.value = products.pagination;
+    const users = await UsersService.getUsers(page.value);
+    data.value = users.data;
+    dataPaginated.value = users.pagination;
   } catch (err) {
     toast.add({
       severity: "error",

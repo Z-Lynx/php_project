@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $perPage = 20;
+        $perPage = 10;
         $products = Product::paginate($perPage);
 
         return $this->successResponse(

@@ -2,7 +2,7 @@
   <main>
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
       <div class="w-full mb-1">
-        <Breadcrumb header="All users" breadCrumb="User" />
+        <Breadcrumb header="All categories" breadCrumb="Categories" />
         <div class="sm:flex">
           <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
             <form class="lg:pr-3" action="#" method="GET">
@@ -29,7 +29,7 @@
           <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
             <button type="button" data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
               <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-              Add user
+              Add categories
             </button>
           </div>
         </div>
@@ -61,27 +61,8 @@
                       <label :for="item.id" class="sr-only">checkbox</label>
                     </div>
                   </td>
-                  <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
-                    <img class="w-10 h-10 rounded-full" :src="item.image" />
-                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                      <div class="text-base font-semibold text-gray-900 dark:text-white">{{ item.name }}</div>
-                      <div class="text-base font-semibold text-gray-900 dark:text-white">{{ item.slug }}</div>
-                    </div>
-                  </td>
-                  <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                    {{ item.description }}
-                  </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.category_id }}
-                  </td>
-                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.price }}
-                  </td>
-                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.sale_price }}
-                  </td>
-                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ item.updated_at }}
+                    {{ item.name }}
                   </td>
                   <td class="p-4 space-x-2 whitespace-nowrap">
                     <button type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -112,13 +93,13 @@
 import Breadcrumb from "../../components/UI/Breadcrumb.vue";
 import Paging from "../../components/UI/Paging.vue";
 import { onMounted, ref } from "vue";
-import ProductsService from "../../services/products.service";
+import BillsServices from "../../services/bills.service";
 import { useToast } from "primevue/usetoast";
 import { useRoute } from "vue-router";
 
 const toast = useToast();
 
-const columns = ["name", "description", "category_id", "price", "sale_price", "updated_at", "actions"];
+const columns = ["name", "actions"];
 const data = ref([]);
 const dataPaginated = ref({});
 const route = useRoute();
@@ -126,9 +107,9 @@ const page = ref(route.query.page || 1);
 
 onMounted(async () => {
   try {
-    const products = await ProductsService.getProducts(page.value);
-    data.value = products.data;
-    dataPaginated.value = products.pagination;
+    const categories = await BillsServices.getBills(page.value);
+    data.value = categories.data;
+    dataPaginated.value = categories.pagination;
   } catch (err) {
     toast.add({
       severity: "error",

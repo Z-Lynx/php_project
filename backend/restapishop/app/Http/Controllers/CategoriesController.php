@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $perPage = 20;
+        $categories = Categories::paginate($perPage);
+
+        return $this->successResponse(
+            $categories->toArray()['data'],
+            '',
+            200,
+            $categories->toArray()
+        );
     }
 
     /**
