@@ -58,5 +58,6 @@ const menuItems = [
   { id: "products", label: "Products", link: "/admin/products", icon: "fa-solid fa-bag-shopping" },
   { id: "carts", label: "Carts", link: "/admin/carts", icon: "fa-solid fa-cart-plus" },
   { id: "billings", label: "Billings", link: "/admin/bills", icon: "fa-solid fa-money-bill" },
+  { id: "send-notifications", label: "Send Notifications", link: "/admin/notifications", icon: "fa-solid fa-bell" },
 ];
 </script>

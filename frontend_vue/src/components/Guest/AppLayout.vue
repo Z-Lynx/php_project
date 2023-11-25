@@ -44,7 +44,7 @@ const resendActivate = () => {
         severity: "success",
         summary: "Resend Verify Email successful",
         detail: response.message,
-        life: 2500,
+        life: 1500,
       });
 
       setTimeout(() => {
@@ -56,7 +56,7 @@ const resendActivate = () => {
         severity: "error",
         summary: "Resend Verify Email failed",
         detail: error.response.data.message,
-        life: 2500,
+        life: 1500,
       });
     });
 };
@@ -70,7 +70,7 @@ const onMessage = (e) => {
     severity: "success",
     summary: "Thanh Toán Thành Công",
     detail: e.data.response.message,
-    life: 2500,
+    life: 1500,
   });
 };
 

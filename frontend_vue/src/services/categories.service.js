@@ -16,6 +16,7 @@ class CategoriesService {
   createCategory(category) {
     return AxiosCustom.post("/categories", {
       name: category.name,
+      slug: category.slug,
     }).then((response) => {
       return response.data;
     });
@@ -24,6 +25,7 @@ class CategoriesService {
   updateCategory(category) {
     return AxiosCustom.put(`/categories/${category.id}`, {
       name: category.name,
+      slug: category.slug,
     }).then((response) => {
       return response.data;
     });

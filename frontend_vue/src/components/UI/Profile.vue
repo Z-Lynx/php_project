@@ -106,7 +106,7 @@ const handleRouter = (item) => {
           severity: "success",
           summary: "LogOut successful",
           detail: response.message,
-          life: 2500,
+          life: 1500,
         });
       })
       .catch((error) => {
@@ -115,7 +115,7 @@ const handleRouter = (item) => {
           severity: "error",
           summary: "LogOut failed",
           detail: error.response.data.message,
-          life: 2500,
+          life: 1500,
         });
       });
     router.push("auth/login");
@@ -149,7 +149,7 @@ const handleReadNotifications = async (item) => {
       severity: "error",
       summary: "Error",
       detail: error.response.data.message,
-      life: 2500,
+      life: 1500,
     });
   }
 };

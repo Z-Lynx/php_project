@@ -14,23 +14,31 @@ class ProductsServices {
   }
 
   createProduct(product) {
-    return AxiosCustom.post("/products", {
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      category_id: product.category_id,
-    }).then((response) => {
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("sale_price", product.sale_price);
+    formData.append("description", product.description);
+    formData.append("category_id", product.category_id);
+    formData.append("image", product.image);
+    formData.append("slug", product.slug);
+
+    return AxiosCustom.post("/products", formData).then((response) => {
       return response.data;
     });
   }
 
   updateProduct(product) {
-    return AxiosCustom.put(`/products/${product.id}`, {
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      category_id: product.category_id,
-    }).then((response) => {
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    formData.append("sale_price", product.sale_price);
+    formData.append("description", product.description);
+    formData.append("category_id", product.category_id);
+    formData.append("image", product.image);
+    formData.append("slug", product.slug);
+
+    return AxiosCustom.post(`/products/${product.id}?_method=PUT`, formData).then((response) => {
       return response.data;
     });
   }

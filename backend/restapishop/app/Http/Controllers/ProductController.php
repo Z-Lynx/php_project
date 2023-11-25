@@ -18,9 +18,9 @@ class ProductController extends Controller
     {
         $perPage = 10;
         $products = Product::paginate($perPage);
-
+        $productData = ProductResource::collection($products);
         return $this->successResponse(
-            $products->toArray()['data'],
+            $productData,
             '',
             200,
             $products->toArray()
@@ -46,10 +46,12 @@ class ProductController extends Controller
             'image' => $request->image,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
+            'slug' => $request->slug,
+            'category_id' => $request->category_id,
         ]);
 
         return $this->successResponse(
-            $product->toArray(),
+            new ProductResource($product),
             'Product created successfully',
             201
         );
@@ -96,20 +98,21 @@ class ProductController extends Controller
                 404
             );
         }
+        $requestData = $request->all();
 
-        if ($request->hasFile('image')) {
+        if($request->hasFile('image')) {
             $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
             Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image));
+            $requestData['image'] = $imageName;
+            // Delete the associated image
             Storage::delete('public/product_image/' . $product->image);
-
-            $request->image = $imageName;
         }
 
-
-        $product->update($request->all());
+        $product->update($requestData);
+        $productData = new ProductResource($product);
 
         return $this->successResponse(
-            new ProductResource($product),
+            $productData,
             'Product updated successfully',
             200
         );

@@ -31,7 +31,7 @@ AuthService.activateUser(code.value)
       severity: "success",
       summary: "Verify Email successful",
       detail: response.message,
-      life: 2500,
+      life: 1500,
     });
 
     setTimeout(() => {
@@ -43,7 +43,7 @@ AuthService.activateUser(code.value)
       severity: "error",
       summary: "Verify Email failed",
       detail: error.response.data.message,
-      life: 2500,
+      life: 1500,
     });
   });
 </script>

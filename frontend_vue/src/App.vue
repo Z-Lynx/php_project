@@ -1,8 +1,11 @@
 <script setup>
 import { computed, onMounted } from "vue";
 import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
 import { getAnalytics } from "firebase/analytics";
 import Toast from "primevue/toast";
+
 import store from "./store";
 import Pusher from "pusher-js";
 
@@ -17,16 +20,35 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const messaging = getMessaging(app);
 
+onMessage(messaging, (payload) => {
+  console.log("Message received. ", payload);
+  // ...
+});
+
+Notification.requestPermission();
 const data = store.getters.getUser;
+
 if (data.token) {
   store.dispatch("getUser");
   store.dispatch("getNotifications");
 }
 
 onMounted(() => {
-  console.log("mounted");
+  getToken(messaging, { vapidKey: "BGOX4JOSweQOG9tEhpF4IOBowWOfkuRRlwsdoda_Oo9Dkd4a_LY-wem1zSK26g0Op6C3bDvRzRwWsCbQHvSlhLY" })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("Token : " + currentToken);
+      } else {
+        console.log("No registration token available. Request permission to generate one.");
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err);
+      // ...
+    });
+
   var pusher = new Pusher("9799d9bf3eb9505ba6a8", {
     cluster: "ap1",
   });

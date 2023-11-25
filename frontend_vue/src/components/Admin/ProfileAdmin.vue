@@ -21,7 +21,7 @@
           <div class="text-lg font-semibold flex justify-center">Thông báo</div>
           <div v-for="item in notifications" class="flex items-center justify-between pb-2">
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-full mr-2" v-bind:class="item.type === 'success' ? 'bg-green-500' : 'bg-gray-500'"></div>
+              <img id="user-menu-button" class="mr-2 w-10 h-10 rounded" src="http://127.0.0.1:8000/api/images/default_avatar.jpg" alt="User Avatar">
               <a class="text-start max-w-[150px] text-ellipsis block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 {{ item.data }}
               </a>
@@ -88,7 +88,7 @@ const handleRouter = (item) => {
           severity: "success",
           summary: "LogOut successful",
           detail: response.message,
-          life: 2500,
+          life: 1500,
         });
       })
       .catch((error) => {
@@ -97,7 +97,7 @@ const handleRouter = (item) => {
           severity: "error",
           summary: "LogOut failed",
           detail: error.response.data.message,
-          life: 2500,
+          life: 1500,
         });
       });
     router.push("/auth/login");
@@ -131,7 +131,7 @@ const handleReadNotifications = async (item) => {
       severity: "error",
       summary: "Error",
       detail: error.response.data.message,
-      life: 2500,
+      life: 1500,
     });
   }
 };

@@ -2,7 +2,7 @@
   <main>
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
       <div class="w-full mb-1">
-        <Breadcrumb header="All users" breadCrumb="User" />
+        <Breadcrumb header="All users" breadCrumb="User" link="users" />
         <div class="sm:flex">
           <div class="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 dark:divide-gray-700">
             <form class="lg:pr-3" action="#" method="GET">
@@ -81,16 +81,16 @@
                     {{ item.updated_at }}
                   </td>
                   <td class="p-4 space-x-2 whitespace-nowrap">
-                    <button type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    <button @click="showEditUser(item)" type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                       <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                         <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
                       </svg>
-                      Edit user
+                      Edit
                     </button>
-                    <button type="button" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                    <button @click="showDelete(item)" type="button" data-modal-toggle="delete-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                       <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                      Delete user
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -103,6 +103,7 @@
 
     <Paging :data="dataPaginated" />
     <PopupDataItem :data="dataPopUpItem" @submit="callback" />
+    <DelItem :data="dataPopUpDelete" @choose="callbackChoose" />
   </main>
 </template>
 
@@ -110,6 +111,7 @@
 import Breadcrumb from "../../components/UI/Breadcrumb.vue";
 import Paging from "../../components/UI/Paging.vue";
 import PopupDataItem from "../../components/CRUD/PopupDataItem.vue";
+import DelItem from "../../components/CRUD/DelItem.vue";
 import { onMounted, ref } from "vue";
 import UsersService from "../../services/user.service";
 import { useToast } from "primevue/usetoast";
@@ -121,7 +123,30 @@ const dataPopUpItem = ref({
   isShow: false,
   isCreate: false,
   title: "",
+  dataSelect: [],
 });
+
+const dataPopUpDelete = ref({
+  isShow: false,
+  dataItem: {},
+});
+
+const formDataEditInputs = [
+  {
+    id: "name",
+    label: "Name",
+    type: "text",
+    error_label: "Username must be at least 3 characters long.",
+    error: "name",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    error_label: "Email must be valid.",
+    error: "email",
+  },
+];
 
 const formDataInputs = [
   {
@@ -153,6 +178,7 @@ const formDataInputs = [
     error: "confirm_password",
   },
 ];
+
 const columns = ["name", "is_active", "is_admin", "auth_type", "updated_at", "actions"];
 const data = ref([]);
 const dataPaginated = ref({});
@@ -170,7 +196,7 @@ onMounted(async () => {
       severity: "error",
       summary: "Error",
       detail: err.message,
-      life: 3000,
+      life: 1500,
     });
   }
 });
@@ -181,11 +207,105 @@ const showAddUser = () => {
     isShow: true,
     isCreate: true,
     title: "Add User",
+    dataSelect: [],
   };
-  console.log(dataPopUpItem.value);
-};
-const callback = async (data) => {
-  console.log(data);
 };
 
+const showEditUser = (item) => {
+  dataPopUpItem.value = {
+    formDataInputs: formDataEditInputs,
+    isShow: true,
+    isCreate: false,
+    title: "Edit User",
+    dataItem: item,
+    dataSelect: [],
+  };
+};
+
+const callback = async (dataCallBack) => {
+  if (dataPopUpItem.value.isCreate) {
+    try {
+      const user = await UsersService.createUser(dataCallBack);
+      data.value.push(user.data);
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "User created successfully",
+        life: 1500,
+      });
+    } catch (err) {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: err.message,
+        life: 1500,
+      });
+    }
+  } else {
+    try {
+      const user = await UsersService.updateUser(dataCallBack);
+      data.value.map((item) => {
+        if (item.id === user.data.id) {
+          item = user.data;
+        }
+      });
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "User updated successfully",
+        life: 1500,
+      });
+    } catch (err) {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: err.message,
+        life: 1500,
+      });
+    }
+  }
+
+  dataPopUpItem.value = {
+    formDataInputs: [],
+    isShow: false,
+    isCreate: false,
+    title: "Edit User",
+    dataItem: [],
+    dataSelect: [],
+  };
+};
+
+const showDelete = (item) => {
+  dataPopUpDelete.value = {
+    isShow: true,
+    dataItem: item,
+  };
+};
+
+const callbackChoose = (choose) => {
+  if (choose.isDelete) {
+    console.log(choose.dataItem);
+    try {
+      UsersService.deleteUser(choose.dataItem.id);
+      data.value = data.value.filter((item) => item.id !== choose.dataItem.id);
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "User deleted successfully",
+        life: 1500,
+      });
+    } catch (err) {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: err.message,
+        life: 1500,
+      });
+    }
+  }
+  dataPopUpDelete.value = {
+    isShow: false,
+    dataItem: {},
+  };
+};
 </script>

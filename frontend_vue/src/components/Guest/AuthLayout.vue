@@ -40,7 +40,7 @@ const onMessage = (e) => {
     severity: "success",
     summary: "Login successful",
     detail: "Login successful",
-    life: 2500,
+    life: 1500,
   });
   return router.push("/home");
 };

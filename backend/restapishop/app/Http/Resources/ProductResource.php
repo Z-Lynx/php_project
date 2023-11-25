@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Categories;
 
 class ProductResource extends JsonResource
 {
@@ -22,6 +23,8 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'sale_price' => $this->sale_price,
             'slug' => $this->slug,
+            'category_id' => Categories::find($this->category_id)->slug,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

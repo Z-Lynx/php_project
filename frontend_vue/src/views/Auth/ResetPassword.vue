@@ -88,7 +88,7 @@ const resetPassword = () => {
           severity: "success",
           summary: "Reset Password successful",
           detail: response.message,
-          life: 2500,
+          life: 1500,
         });
         router.push("/login");
       })
@@ -99,7 +99,7 @@ const resetPassword = () => {
           severity: "error",
           summary: "Reset Password failed",
           detail: error.response.data.message,
-          life: 2500,
+          life: 1500,
         });
       });
   }

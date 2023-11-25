@@ -10,21 +10,42 @@
         </svg>
       </button>
 
-      <form @submit.prevent="submit">
-        <div class="relative mb-4" v-for="item in formDataInputs">
-          <label :for="item.id" class="">{{ item.label }}</label>
-          <input v-model="formData[item.id]" :type="(item.type === 'password' && showPassword ? 'text' : item.type)" :id="item.id" :name="item.id" class="w-full rounded border p-2" />
-          <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
-          <span v-if="item.type === 'password'" @click="toggleShowPasspord" class="absolute top-9 right-5 cursor-pointer text-gray-400 dark:text-night-300">
-            <i v-if="showPassword" class="fa-lg fa-solid fa-eye"></i>
-            <i v-else class="fa-lg fa-solid fa-eye-slash"></i>
-          </span>
+      <form @submit.prevent="submit" class="flex flex-col h-[90vh]">
+        <div class="grow">
+          <div class="relative mb-4" v-for="item in formDataInputs">
+            <div v-if="item.type === 'image'">
+              <label :for="item.id" class="">{{ item.label }}</label>
+              <div class="flex items-center space-x-6">
+                <div class="h-16 w-16">
+                  <img :src="imageSrc" id="preview_img" class="h-16 w-16 object-cover rounded-full" alt="Business photo" />
+                </div>
+                <input v-on:change="handleChangeImage($event)" :id="item.id" type="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" />
+              </div>
+              <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
+            </div>
+
+            <div v-if="item.type === 'select'">
+              <label :for="item.id" class="">{{ item.label }}</label>
+              <Dropdown v-model="formData[item.id]" :options="dataSelect" optionLabel="name" optionValue="id" placeholder="Select" class="w-full" />
+              <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
+            </div>
+
+            <div v-if="item.type !== 'image' && item.type !== 'select'">
+              <label :for="item.id" class="">{{ item.label }}</label>
+              <input v-model="formData[item.id]" :type="item.type === 'password' && showPassword ? 'text' : item.type" :id="item.id" :name="item.id" class="w-full rounded border p-2" />
+              <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
+              <span v-if="item.type === 'password'" @click="toggleShowPasspord" class="absolute top-9 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+                <i v-if="showPassword" class="fa-lg fa-solid fa-eye"></i>
+                <i v-else class="fa-lg fa-solid fa-eye-slash"></i>
+              </span>
+            </div>
+          </div>
         </div>
         <button type="submit" class="mb-2 w-full rounded bg-green-500 p-2 text-white">
           <div class="flex justify-center items-center" v-if="isLoading">
             <LoadingSpiner />
           </div>
-          <div v-else>Create</div>
+          <div v-else>{{ isCreate ? "Create" : "Edit" }}</div>
         </button>
       </form>
     </div>
@@ -40,7 +61,13 @@ const isShow = ref(false);
 const isCreate = ref(false);
 const title = ref("Add User");
 const formData = ref({});
+const isFormKey = ref("");
 const isSubmit = ref(false);
+const isLoading = ref(false);
+const dataItem = ref(null);
+const setSlug = ref(true);
+const dataSelect = ref([]);
+const imageSrc = ref("");
 const showPassword = ref(false);
 
 const toggleShowPasspord = () => {
@@ -48,8 +75,7 @@ const toggleShowPasspord = () => {
 };
 
 const props = defineProps(["data"]);
-const emit = defineEmits(['submit'])
-
+const emit = defineEmits(["submit"]);
 onMounted(() => {
   console.log(props);
   updateData(props.data);
@@ -62,17 +88,51 @@ watch(
   }
 );
 
+watch(
+  () => formData.value.name,
+  (newName) => {
+    if (formData.value.hasOwnProperty("slug") && setSlug) {
+      formData.value.slug = handleSlug(newName);
+    }
+  }
+);
+
 const updateData = (data) => {
-  console.log(data);
+  isLoading.value = false;
+  imageSrc.value = "";
+
   if (data) {
     formDataInputs.value = data.formDataInputs;
-    data.formDataInputs.forEach((item) => {
-      formData.value[item.id] = "";
-    });
-
     isShow.value = data.isShow;
     isCreate.value = data.isCreate;
     title.value = data.title;
+    dataItem.value = data.dataItem;
+    dataSelect.value = data.dataSelect;
+  }
+
+  console.log(dataSelect);
+  if (!isCreate.value) {
+    setSlug.value = false;
+    formDataInputs.value.forEach((item) => {
+      formData.value[item.id] = data.dataItem[item.id];
+    });
+    if (formData.value.hasOwnProperty("image")) {
+      imageSrc.value = formData.value.image;
+    }
+
+    console.log("select");
+    formDataInputs.value.forEach((item) => {
+      if (item.type === "select") {
+        const dataTemp = dataSelect.value.find((itemDataSelect) => {
+          return itemDataSelect.slug === data.dataItem[item.id];
+        });
+        formData.value[item.id] = dataTemp.id;
+      }
+    });
+  } else {
+    data.formDataInputs.forEach((item) => {
+      formData.value[item.id] = "";
+    });
   }
 };
 
@@ -86,38 +146,26 @@ const isPasswordValid = computed(() => {
 });
 
 const isFormValid = computed(() => {
-  formDataInputs.value.forEach((item) => {
-    if (item.error === "email") {
-      if (!isEmailValid.value) {
+  return !formDataInputs.value.some((item) => {
+    switch (item.error) {
+      case "email":
+        return !isEmailValid.value;
+      case "password":
+        return !isPasswordValid.value;
+      case "confirm_password":
+        return formData.value.password !== formData.value.password_confirmation;
+      case "name":
+        return formData.value.name.length < 3;
+      case "required":
+        return formData.value[item.id] === "";
+      default:
         return false;
-      }
-    }
-    if (item.error === "password") {
-      if (!isPasswordValid.value) {
-        return false;
-      }
-    }
-    if (item.error === "confirm_password") {
-      if (formData.value.password !== formData.value.password_confirmation) {
-        return false;
-      }
-    }
-    if (item.error === "name") {
-      if (formData.value.name.length < 3) {
-        return false;
-      }
-    }
-    if (item.error === "required") {
-      if (formData.value[item.id].length === 0) {
-        return false;
-      }
     }
   });
-  return true;
 });
 
-const isRequired = computed((id) => {
-  return formData.value[id].length >= 0;
+const isRequired = computed(() => {
+  return formData.value[isFormKey.value] === "" ? false : true;
 });
 
 const isUsernameValid = computed(() => {
@@ -127,6 +175,14 @@ const isUsernameValid = computed(() => {
 const isConfirmPasswordError = computed(() => {
   return formData.value.password === formData.value.password_confirmation;
 });
+
+const handleChangeImage = (e) => {
+  console.log(e);
+  const file = e.target.files[0];
+  console.log(file);
+  formData.value.image = file;
+  imageSrc.value = URL.createObjectURL(file);
+};
 
 const handleErrorForm = (field) => {
   switch (field.error) {
@@ -139,7 +195,8 @@ const handleErrorForm = (field) => {
     case "name":
       return isUsernameValid.value;
     case "required":
-      return isRequired(field.id).value;
+      isFormKey.value = field.id;
+      return isRequired.value;
     default:
       return false;
   }
@@ -147,13 +204,27 @@ const handleErrorForm = (field) => {
 
 const submit = () => {
   isSubmit.value = true;
+
   if (isFormValid.value) {
-    emit("submit", formData.value);
+    isLoading.value = true;
+    if (isCreate.value) {
+      emit("submit", formData.value);
+    } else {
+      formDataInputs.value.forEach((item) => {
+        if (formData.value[item.id]) {
+          dataItem.value[item.id] = formData.value[item.id];
+        }
+      });
+      emit("submit", dataItem.value);
+    }
   }
+};
+
+const handleSlug = (value) => {
+  return value.trim().toLowerCase().replace(/\s+/g, "-");
 };
 
 const closePopup = () => {
   isShow.value = false;
 };
-
 </script>

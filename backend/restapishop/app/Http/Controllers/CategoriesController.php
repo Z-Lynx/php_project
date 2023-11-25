@@ -38,7 +38,18 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'slug' => 'required|string',
+        ]);
+
+        $category = Categories::create($request->all());
+
+        return $this->successResponse(
+            $category->toArray(),
+            'Category created successfully',
+            201
+        );
     }
 
     /**
@@ -60,9 +71,22 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Categories $category)
     {
-        //
+        if(!$category) {
+            return $this->errorResponse(
+                'Category not found',
+                404
+            );
+        }
+
+        $category->update($request->all());
+
+        return $this->successResponse(
+            $category->toArray(),
+            'Category updated successfully',
+            200
+        );
     }
 
     /**
@@ -70,6 +94,21 @@ class CategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Categories::find($id);
+
+        if(!$category) {
+            return $this->errorResponse(
+                'Category not found',
+                404
+            );
+        }
+
+        $category->delete();
+
+        return $this->successResponse(
+            null,
+            'Category deleted successfully',
+            200
+        );
     }
 }

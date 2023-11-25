@@ -58,7 +58,7 @@ const forgetPassword = () => {
           severity: "success",
           summary: "Send Email successful",
           detail: response.message,
-          life: 2500,
+          life: 1500,
         });
       })
       .catch((error) => {
@@ -68,7 +68,7 @@ const forgetPassword = () => {
           severity: "error",
           summary: "Send Email failed",
           detail: error.response.data.message,
-          life: 2500,
+          life: 1500,
         });
       });
   }

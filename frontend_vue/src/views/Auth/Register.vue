@@ -107,7 +107,7 @@ const register = () => {
           severity: "success",
           summary: "Register successful",
           detail: response.message,
-          life: 2500,
+          life: 1500,
         });
         router.push("/");
       })
@@ -117,7 +117,7 @@ const register = () => {
           severity: "error",
           summary: "Register failed",
           detail: error.response.data.message,
-          life: 2500,
+          life: 1500,
         });
       });
   }
