@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\ImageProductsController;
 use App\Http\Controllers\imgCC;
@@ -47,6 +48,8 @@ Route::post(
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
+// get Products
+Route::get('/get-products', [ClientController::class, 'getProducts'])->middleware('guest');
 // middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);

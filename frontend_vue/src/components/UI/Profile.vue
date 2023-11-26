@@ -55,8 +55,10 @@
     </div>
 
     <router-link to="/cart">
-      <i class="ml-5 fa-solid fa-cart-shopping fa-2x"></i>
+      <i class="fa-solid fa-cart-shopping fa-2x"></i>
     </router-link>
+
+    
   </div>
 </template>
 
