@@ -1,4 +1,5 @@
 import authService from "../services/auth.service";
+import clientService from "../services/client.service";
 
 export async function getUser({ commit }) {
   try {
@@ -45,4 +46,25 @@ export function updateNotifications({ commit }, payload) {
 
 export function readNotifications({ commit }, payload) {
   commit("readNotifications", payload);
+}
+
+export async function getCart({ commit }) {
+  try {
+    const resData = await clientService.getCarts();
+    commit("getCart", resData.data);
+  } catch (e) {
+    commit("removeUser");
+  }
+}
+
+export async function addToCart({ commit }, payload) {
+  commit("addToCart", payload);
+}
+
+export async function updateCart({ commit }, payload) {
+  commit("updateCart", payload);
+}
+
+export async function removeCart({ commit }, payload) {
+  commit("removeCart", payload);
 }

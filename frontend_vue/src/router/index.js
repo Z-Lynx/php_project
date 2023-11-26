@@ -177,9 +177,9 @@ const routes = [
         path: "product-details/:id",
       },
       {
-        name: "checkout",
+        name: "my-cart",
         component: Checkout,
-        path: "checkout",
+        path: "my-cart",
       },
     ],
   },

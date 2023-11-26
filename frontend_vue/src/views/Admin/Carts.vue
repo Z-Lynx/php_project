@@ -154,14 +154,7 @@ const formDataInputs = [
     type: "number",
     error_label: "Need to require quanity.",
     error: "required",
-  },
-  {
-    id: "price",
-    label: "Price",
-    type: "number",
-    error_label: "Need to require price.",
-    error: "required",
-  },
+  }
 ];
 
 const showAdd = () => {

@@ -31,6 +31,7 @@ const data = store.getters.getUser;
 
 if (data.token) {
   store.dispatch("getUser");
+  store.dispatch("getCart");
   store.dispatch("getNotifications");
 }
 

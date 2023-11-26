@@ -12,7 +12,6 @@ class CartsServices {
       user_id: product.user_id,
       product_id: product.product_id,
       quantity: product.quantity,
-      price: product.price,
     }).then((response) => {
       return response.data;
     });
@@ -20,6 +19,8 @@ class CartsServices {
 
   updateCart(product) {
     return AxiosCustom.put(`/carts/${product.id}`, {
+      user_id: product.user_id,
+      product_id: product.product_id,
       quantity: product.quantity,
     }).then((response) => {
       return response.data;

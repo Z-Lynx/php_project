@@ -21,7 +21,7 @@
           <div class="text-lg font-semibold flex justify-center">Thông báo</div>
           <div v-for="item in notifications" class="flex items-center justify-between pb-2">
             <div class="flex items-center">
-              <img id="user-menu-button" class="mr-2 w-10 h-10 rounded" src="http://127.0.0.1:8000/api/images/default_avatar.jpg" alt="User Avatar">
+              <img id="user-menu-button" class="mr-2 w-10 h-10 rounded" src="http://127.0.0.1:8000/api/images/default_avatar.jpg" alt="User Avatar" />
               <a class="text-start max-w-[150px] text-ellipsis block py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                 {{ item.data }}
               </a>
@@ -54,11 +54,16 @@
       </router-link>
     </div>
 
-    <router-link to="/cart">
+    <router-link class="relative" to="/my-cart">
       <i class="fa-solid fa-cart-shopping fa-2x"></i>
+      <div v-if="countItemCart > 0" class="absolute top-0 right-0">
+        <div class="bg-red-500 flex justify-center w-4 h-4 rounded-full">
+          <div class="text-[0.75rem]">
+            {{ countItemCart }}
+          </div>
+        </div>
+      </div>
     </router-link>
-
-    
   </div>
 </template>
 
@@ -75,6 +80,7 @@ const isMenuVisible = ref(false);
 const isNotifications = ref(false);
 const user = computed(() => store.state.user.data);
 
+const countItemCart = computed(() => store.state.cart.count);
 const notifications = computed(() => store.state.user.notifications);
 const countNotifications = computed(() => store.state.user.countNotifications);
 
@@ -135,11 +141,11 @@ onUnmounted(() => {
 
 const closeMenuOutside = (event) => {
   if (event.srcElement.id !== "user-menu-button") {
-      isMenuVisible.value = false;
-    }
-    if (event.srcElement.id !== "user-notifications") {
-      isNotifications.value = false;
-    }
+    isMenuVisible.value = false;
+  }
+  if (event.srcElement.id !== "user-notifications") {
+    isNotifications.value = false;
+  }
 };
 
 const handleReadNotifications = async (item) => {

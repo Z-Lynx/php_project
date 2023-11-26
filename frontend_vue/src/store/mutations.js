@@ -15,7 +15,7 @@ export function setUser(state, payload) {
 
 export function setToken(state, token) {
   state.user.data.fcm_id = token;
-  
+
   // over write user
   const user = JSON.parse(localStorage.getItem("user"));
   user.fcm_id = token;
@@ -68,3 +68,25 @@ export function readNotifications(state, idNotifications) {
   state.user.countNotifications -= 1;
 }
 
+export function getCart(state, cart) {
+  state.cart.data = cart;
+  state.cart.count = cart.length;
+}
+
+export function addToCart(state, product) {
+  state.cart.data.push(product);
+  state.cart.count += 1;
+}
+
+export function updateCart(state, product) {
+  state.cart.data.map((item) => {
+    if (item.id === product.id) {
+      item.quantity = product.quantity;
+    }
+  });
+}
+
+export function removeCart(state, cart) {
+  state.cart.data = state.cart.data.filter((item) => item.id !== cart.id);
+  state.cart.count -= 1;
+}

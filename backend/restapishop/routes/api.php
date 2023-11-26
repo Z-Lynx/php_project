@@ -48,25 +48,31 @@ Route::post(
     [AuthController::class, 'reset_password']
 )->middleware('guest')->name('password.update');
 
+// Payment
+Route::get('/vnpay-payment/{id}', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+Route::get('/vnpay-payment/{id}/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+
 // get Products
 Route::get('/get-products', [ClientController::class, 'getProducts'])->middleware('guest');
+Route::get('/get-product/{id}', [ClientController::class, 'getProduct'])->middleware('guest');
+
 // middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Auth
     Route::get('/info', [AuthController::class, 'info']);
     Route::get('/notifications', [NotificationController::class, 'getNotifications']);
-
     Route::post('/logout', [AuthController::class, 'logout']);
-
     Route::post('/update-info', [UsersController::class, 'updateInfo']);
-    Route::post('/add-to-cart', [CartsController::class, 'addToCart']);
-    Route::post('/remove-from-cart', [CartsController::class, 'removeFromCart']);
 
-    // payment
-    Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
-    Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
-
-    // set token fcm
+    // Set token fcm
     Route::post('/set-token', [NotificationController::class, 'setToken']);
+
+    // Get carts
+    Route::get('/get-carts', [ClientController::class, 'getCarts']);
+    Route::post('/add-to-cart', [ClientController::class, 'addToCart']);
+    Route::put('/update-cart/{id}', [ClientController::class, 'updateCart']);
+    Route::delete('/remove-cart/{id}', [ClientController::class, 'removeFromCart']);
+
 });
 
 // is Admin

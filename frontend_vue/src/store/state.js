@@ -7,4 +7,8 @@ export default {
     notifications: [],
     countNotifications: 0,
   },
+  cart: {
+    data: [],
+    count: 0,
+  },
 };

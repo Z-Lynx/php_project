@@ -1,133 +1,196 @@
 <template>
-  <div class="container">
-    <!-- Đường kẻ chấm vuông -->
-    <div class="divide-y divide-green-300">
-      <!-- Tiêu đề -->
-      <h1 class="text-3xl font-bold">Product Detail</h1>
+  <div class="flex flex-col container mx-auto mt-10 h-full">
+    <div class="grow">
+      <h1 class="text-2xl font-bold mb-4">Carts</h1>
+      <hr class="border-t-2 border-orange-500 my-4" />
     </div>
-    <!-- Đường kẻ ngang -->
-    <hr />
+    <div class="flex shadow-md my-10">
+      <div class="w-3/4 bg-white px-10 py-10">
+        <div class="flex mt-10 mb-5">
+          <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Quantity</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Price</h3>
+          <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Total</h3>
+        </div>
 
-    <!-- Phân chia thành hai phần -->
-    <div class="flex justify-between pt-5">
-      <!-- Phần hiển thị thông tin sản phẩm -->
-      <div class="flex flex-1">
-        <div>
-          <!-- Hình ảnh sản phẩm -->
-          <div class="margin mr-3 h-200 mx-300">
-            <img src="@/assets/sp.png" alt="Product" />
+        <!-- product -->
+        <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" v-for="item of carts">
+          <div class="flex w-2/5">
+            <div class="w-20">
+              <img class="h-24 w-20" :src="item.product.image" alt="" />
+            </div>
+            <div class="flex flex-col justify-between ml-4 flex-grow">
+              <span class="font-bold text-sm">{{ item.product.name }}</span>
+              <span class="text-red-500 text-xs">{{ item.product.description }}</span>
+              <button @click="handleRemoveCart(item)" class="flex items-start font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</button>
+            </div>
           </div>
 
-          <!-- Tên sản phẩm -->
-          <div class="prd ml-5 pl-10 text-4xl">Bàn phím alice</div>
-
-          <!-- Giá sản phẩm -->
-          <div class="prd ml-5 pl-10 text-4xl text-black">$100</div>
+          <div class="flex justify-center w-1/5">
+            <button @click="handleSubQuantity(item)">
+              <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg>
+            </button>
+            <div class="mx-2">
+              {{ item.quantity }}
+            </div>
+            <button @click="handleAddQuantity(item)">
+              <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
+                <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+              </svg>
+            </button>
+          </div>
+          <span class="text-center w-1/5 font-semibold text-sm">{{ item.product.sale_price }} $</span>
+          <span class="text-center w-1/5 font-semibold text-sm">{{ item.price }} $</span>
         </div>
+
+        <RouterLink to="/home" class="flex font-semibold text-indigo-600 text-sm mt-10">
+          <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" /></svg>
+          Continue Shopping
+        </RouterLink>
       </div>
 
-      <!-- Phần hiển thị chi tiết thanh toán -->
-      <div class="flex flex-2">
-        <div>
-          <!-- Tiêu đề Payment Detail -->
-          <h2 class="text-black text-2xl font-bold mb-2 ">Payment Detail</h2>
-
-          <!-- Các thông tin thanh toán -->
-          <div>
-            <div class="flex justify-between items-center mx-15 mb-5 text-gray-500">
-              <span>Subtotal:</span>
-              <span>$100.00</span>
-            </div>
-            <div class="flex justify-between items-center mx-15 mb-5 text-gray-500">
-              <span>Discount:</span>
-              <span>-$10.00</span>
-            </div>
-            <div class="flex justify-between items-center mx-15 mb-5 text-gray-500">
-              <span>Shipment:</span>
-              <span>$5.00</span>
-            </div>
-
-            <!-- Đường kẻ ngang -->
-            <div class="h-px mx-1 border-t border-gray-400 w-full"></div>
-
-            <!-- Tổng cộng -->
-            <div class="flex justify-between items-center mx-15 mb-10 text-gray-500" style="color: #000000">
-              <span>Grand Total:</span>
-              <span>$95.00</span>
-            </div>
-          </div>
+      <div id="summary" class="w-1/4 px-8 py-10">
+        <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+        <div class="flex justify-between mt-10 mb-5" v-for="item of carts">
+          <span class="font-semibold text-sm uppercase">{{ item.product.name }}</span>
+          <span class="font-semibold text-sm">{{ item.price }} $</span>
         </div>
-
-        <!-- thông tin người dùng -->
-        <div>
-          <h2 class="text-black text-2xl font-bold mb-20 -ml-44 mt-52 ">Enter your details</h2>
-
-          <!--trường nhập liệu -->
-          <div class="flex items-center w-full -mx-44 -mt-12">
-            <input type="text" class="flex-grow border border-solid border-black p-1 rounded flex items-center w-full " id="fullName" placeholder="Full Name" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
+        <div class="border-t mt-8">
+          <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+            <span>Total cost</span>
+            <span>{{ totalPrice }} $</span>
           </div>
-
-          <div class="flex items-center w-full -mx-44 mt-3 ">
-            <input type="text" class="flex-grow border border-solid border-black p-1 rounded flex items-center w-full " id="phonenumber" placeholder="Phone Number" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
-          </div>
-
-          <div class="flex items-center w-full -mx-44 mt-3">
-            <input class="flex-grow border border-solid border-black p-2 rounded flex items-center w-full" type="text" id="streetAddress" placeholder="Street Name and House Number" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
-          </div>
-          <div style="display: flex">
-            <div class="flex items-center w-full -mx-44 mt-3">
-              <input type="text" class="flex-grow border border-solid border-black p-1 rounded flex items-center w-full" id="city" placeholder="City" list="cityList" />
-              <span class="delete-icon cursor-pointer p-2 bg-white rounded-full inline-flex justify-center items-center -ml-8">x</span>
-            </div>
-
-            <div class="SG flex items-center w-2/3 mr-44 ml-56 mt-3 ">
-              <select id="select region" class="iflex-grow border border-solid border-black p-1 rounded flex items-center w-full">
-                <option value="Region 1">Hà Nội</option>
-                <option value="Region 2">Đà Nẵng</option>
-                <option value="Region 3">Đà Lạt</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="flex items-center w-full -mx-44 mt-3">
-            <input type="text" class="input-field border border-solid border-black p-1 rounded flex items-center w-full" id="postalCode" placeholder="Postal Code" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
-          </div>
-
-          <!-- Checkbox -->
-          <div class="flex items-center">
-  <input type="checkbox" id="recipient" class="checkbox-input bg-black -mx-44 w-5 h-5 mt-3 ">
-  <label for="recipient" class="checkbox-label text-gray-600 mx-44 mt-3 ">I am the recipient of my order</label>
-</div>
-
-
-          <div class="flex items-center w-full -mx-44 mt-3">
-            <input type="text" class="input-field border border-solid border-black p-1 rounded flex items-center w-full" id="recipientName" placeholder="Recipient Name" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
-          </div>
-          <div class="flex items-center w-full -mx-44 mt-3">
-            <input type="text" class="input-field border border-solid border-black p-1 rounded flex items-center w-full" id="recipientPhoneNumber" placeholder="Phone Number" />
-            <span class="delete-icon cursor-pointer p-1 bg-white rounded-full inline-flex justify-center items-center -ml-4 ">x</span>
-          </div>
-
-          <!-- Các nút điều hướng -->
-          <div class="flex mt-5 mb-10 h-10 -ml-24 ">
-            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid hover:bg-white hover:text-[#ea8b71]">Back</button>
-            <div class="mx-1"></div>
-            <button class="hidden md:block  rounded-lg bg-[#ea8b71] text-white text-16 px-9 border border-solid hover:bg-white hover:text-[#ea8b71]">Submit</button>
-          </div>
+          <button @click="handleCheckout()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import ClientService from "../../services/client.service";
+import { RouterLink, useRoute } from "vue-router";
+import store from "../../store";
+import { useToast } from "primevue/usetoast";
 
-<style>
+const route = useRoute();
+const toast = useToast();
+const totalPrice = ref(0);
+const data = store.getters.getUser;
+const carts = ref([]);
 
+onMounted(async () => {
+  const response = await ClientService.getCarts();
+  carts.value = response.data;
+  updateTotalPrice();
+});
 
-</style>
+const updateTotalPrice = () => {
+  totalPrice.value = 0;
+  carts.value.forEach((item) => {
+    totalPrice.value += parseInt(item.price);
+  });
+};
+const handleAddQuantity = async (item) => {
+  item.quantity += 1;
 
+  try {
+    const response = await ClientService.updateCart(item);
+    item.price = item.quantity * item.product.sale_price;
+    updateTotalPrice();
+    store.dispatch("updateCart", item);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const handleSubQuantity = async (item) => {
+  item.quantity -= 1;
+  try {
+    const response = await ClientService.updateCart(item);
+    item.price = item.quantity * item.product.sale_price;
+    updateTotalPrice();
+    store.dispatch("updateCart", item);
+
+    if (item.quantity === 0) {
+      store.dispatch("removeCart", item);
+
+      carts.value = carts.value.filter((cart) => cart.id !== item.id);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const handleRemoveCart = async (item) => {
+  try {
+    const response = await ClientService.removeCart(item.id);
+    store.dispatch("removeCart", item);
+    updateTotalPrice();
+    
+    carts.value = carts.value.filter((cart) => cart.id !== item.id);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const onMessage = (e) => {
+  if (e.origin !== "http://localhost:8000" || !e.data.response) {
+    return;
+  }
+
+  if (e.data.response.vnp_ResponseCode === "00") {
+    carts.value = [];
+    toast.add({
+      severity: "success",
+      summary: "Thanh Toán Thành Công",
+      detail: e.data.response.message,
+      life: 1500,
+    });
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("message", onMessage, false);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("message", onMessage);
+});
+
+const handleCheckout = async () => {
+  openWindow(`http://localhost:8000/api/vnpay-payment/` + data.data.id, "VNPAY TEST", { width: 500, height: 600 });
+};
+
+function openWindow(url, title, options = {}) {
+  if (typeof url === "object") {
+    options = url;
+    url = "";
+  }
+
+  options = { url, title, width: 600, height: 720, ...options };
+
+  const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left;
+  const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screen.top;
+  const width = window.innerWidth || document.documentElement.clientWidth || window.screen.width;
+  const height = window.innerHeight || document.documentElement.clientHeight || window.screen.height;
+
+  options.left = width / 2 - options.width / 2 + dualScreenLeft;
+  options.top = height / 2 - options.height / 2 + dualScreenTop;
+
+  const optionsStr = Object.keys(options)
+    .reduce((acc, key) => {
+      acc.push(`${key}=${options[key]}`);
+      return acc;
+    }, [])
+    .join(",");
+
+  const newWindow = window.open(url, title, optionsStr);
+
+  if (window.focus) {
+    newWindow.focus();
+  }
+
+  return newWindow;
+}
+</script>

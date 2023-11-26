@@ -5,3 +5,7 @@ export function getUser(state) {
 export function getNotifications(state) {
   return state.user.notifications;
 }
+
+export function getCart(state) {
+  return state.cart;
+}

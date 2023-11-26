@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CartResource;
+use App\Models\Product;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Models\Carts;
@@ -42,7 +43,12 @@ class CartsController extends Controller
             'user_id' => 'required|integer',
             'product_id' => 'required|integer',
             'quantity' => 'required|integer',
-            'price' => 'required|integer',
+        ]);
+
+        $product = Product::find($request->product_id);
+
+        $request->merge([
+            'price' => $product->sale_price * $request->quantity,
         ]);
 
         $cart = Carts::create($request->all());
@@ -82,6 +88,12 @@ class CartsController extends Controller
                 404
             );
         }
+
+        $product = Product::find($request->product_id);
+
+        $request->merge([
+            'price' => $product->sale_price * $request->quantity,
+        ]);
 
         $cart->update($request->all());
 

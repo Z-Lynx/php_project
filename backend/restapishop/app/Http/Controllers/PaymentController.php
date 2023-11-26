@@ -2,24 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bills;
 use Illuminate\Http\Request;
+use App\Models\Carts;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
-    public function vnpay_payment()
+    public function vnpay_payment(Request $request, string $id)
     {
+        $cart = Carts::where('user_id', $id)->get();
+
+        $totalPrice = 0;
+
+        foreach ($cart as $cartItem) {
+            $totalPrice += $cartItem->price;
+        }
+
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = substr(str_shuffle($characters), 0, 3);
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/api/vnpay_payment/callback";
-        $vnp_TmnCode = "EJ9D8IVZ"; //Mã website tại VNPAY 
-        $vnp_HashSecret = "RXFAIQOVBDJHLFYTHUQGOHZCDLAVUREW"; //Chuỗi bí mật
+        $vnp_Returnurl = "http://localhost:8000/api/vnpay-payment/" . $id . "/callback";
+        $vnp_TmnCode = "EJ9D8IVZ";
+        $vnp_HashSecret = "RXFAIQOVBDJHLFYTHUQGOHZCDLAVUREW";
 
-        $vnp_TxnRef = "test000" . $randomString . mt_rand(100, 999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = "TSC" . $randomString . mt_rand(100, 999);
         $vnp_OrderInfo = "Thanh Toán Đơn Hàng";
         $vnp_OrderType = "TSC Shop";
-        $vnp_Amount = "10000000";
+        $vnp_Amount = $totalPrice * 24000 * 100;
         $vnp_Locale = "VN";
         $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -67,8 +78,28 @@ class PaymentController extends Controller
         return redirect($vnp_Url);
     }
 
-    public function vnpay_payment_callback(Request $request)
+    public function vnpay_payment_callback(Request $request, string $id)
     {
+        $cart = Carts::where('user_id', $id)->get();
+
+        $totalPrice = 0;
+
+        foreach ($cart as $cartItem) {
+            $totalPrice += $cartItem->price;
+        }
+
+        foreach ($cart as $cartItem) {
+            Bills::create([
+                'user_id' => $id,
+                'product_id' => $cartItem->product_id,
+                'quantity' => $cartItem->quantity,
+                'total_amount' => $cartItem->price,
+                'status' => 'thanh_toan_thanh_cong',
+            ]);
+
+            Carts::find($cartItem->id)->delete();
+        }
+
         $message = array(
             '00' => 'Giao dịch thành công',
             '07' => 'Giao dịch bị nghi ngờ',
