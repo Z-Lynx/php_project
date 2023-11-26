@@ -25,8 +25,12 @@ export function setToken(state, token) {
 export function removeUser(state) {
   localStorage.removeItem("user");
   Cookies.remove("token");
+  
   state.user.data = null;
   state.user.token = null;
+
+  state.cart.data = [];
+  state.cart.count = 0;
 }
 
 export function changeStatusActivate(state) {

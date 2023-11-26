@@ -8,7 +8,7 @@ class FCMNotification{
     public function sendNotification($body, $user){
 
         $notification = Notifications::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => $user->id,
             'read_at' => null,
             'data' => $body,
             'type' => 'info',

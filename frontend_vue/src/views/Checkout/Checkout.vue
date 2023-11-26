@@ -4,10 +4,10 @@
       <h1 class="text-2xl font-bold mb-4">Carts</h1>
       <hr class="border-t-2 border-orange-500 my-4" />
     </div>
-    <div class="flex shadow-md my-10">
-      <div class="w-3/4 bg-white px-10 py-10">
+    <div class="flex flex-col lg:flex-row shadow-md my-10">
+      <div class="w-full lg:w-3/4 bg-white lg:px-10 lg:py-10 overflow-auto">
         <div class="flex mt-10 mb-5">
-          <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
+          <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Quantity</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Price</h3>
           <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Total</h3>
@@ -20,8 +20,8 @@
               <img class="h-24 w-20" :src="item.product.image" alt="" />
             </div>
             <div class="flex flex-col justify-between ml-4 flex-grow">
-              <span class="font-bold text-sm">{{ item.product.name }}</span>
-              <span class="text-red-500 text-xs">{{ item.product.description }}</span>
+              <span class="w-[50px] lg:w-[200px] font-bold text-sm truncate lg:text-ellipsis overflow-hidden">{{ item.product.name }}</span>
+              <span class="text-red-500 text-xs hidden lg:block">{{ item.product.description }}</span>
               <button @click="handleRemoveCart(item)" class="flex items-start font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</button>
             </div>
           </div>
@@ -48,8 +48,7 @@
           Continue Shopping
         </RouterLink>
       </div>
-
-      <div id="summary" class="w-1/4 px-8 py-10">
+      <div id="summary" class="w-full lg:w-1/4 px-8 py-10">
         <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
         <div class="flex justify-between mt-10 mb-5" v-for="item of carts">
           <span class="font-semibold text-sm uppercase">{{ item.product.name }}</span>
@@ -60,7 +59,7 @@
             <span>Total cost</span>
             <span>{{ totalPrice }} $</span>
           </div>
-          <button @click="handleCheckout()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          <button @click="handleCheckout()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout VNPAY</button>
         </div>
       </div>
     </div>

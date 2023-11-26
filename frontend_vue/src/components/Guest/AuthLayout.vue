@@ -34,7 +34,10 @@ const onMessage = (e) => {
   if (e.origin !== "http://localhost:8000" || !e.data.response) {
     return;
   }
+  
   store.dispatch("setUser", e.data.response);
+  store.dispatch("getNotifications");
+  store.dispatch("getCart");
 
   toast.add({
     severity: "success",

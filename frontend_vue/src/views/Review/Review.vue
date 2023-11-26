@@ -11,7 +11,7 @@
           <div class="flex space-x-2 mt-2 overflow-auto md:overflow-hidden w-full">
             <img @click="handleChangeImage(item)" v-for="item of dataImageDetail" class="object-cover object-center rounded border border-gray-200 w-[150px] h-[150px]" :src="item.image" />
           </div>
-          <div class="md:absolute md:right-0 lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <div class="lg:absolute lg:right-0 lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 class="text-sm title-font text-gray-500 tracking-widest mb-2">CATEGORY: {{ data.category.name }}</h2>
             <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ data.name }}</h1>
             <p class="leading-relaxed">{{ data.description }}</p>

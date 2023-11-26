@@ -90,7 +90,7 @@ const resetPassword = () => {
           detail: response.message,
           life: 1500,
         });
-        router.push("/login");
+        router.push("auth/login");
       })
       .catch((error) => {
         isLoading.value = false;

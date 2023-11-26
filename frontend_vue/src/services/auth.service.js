@@ -37,6 +37,7 @@ class AuthService {
     }).then((response) => {
       store.dispatch("setUser", response.data.data);
       store.dispatch("getNotifications");
+      store.dispatch("getCart");
       return response.data;
     });
   }
