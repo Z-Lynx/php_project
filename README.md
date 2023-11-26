@@ -1,5 +1,13 @@
 # Project PHP
 
+## Technology
+
+- StoreX
+- Vue3
+- TailwindCss
+- FCM (Firebase Cloud Messaging)
+- Pusher
+
 ## Backend: Laravel 10
 
 ### Backend Features
@@ -22,8 +30,8 @@
 | POST           | ![Register Icon](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)           |
 | PUT    | ![Forget Password Icon](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)           |
 | DELETE | ![Login With Facebook](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)       |
-| Add to Cart    | ![Login With Gmail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChangesGrey.svg)       |
-| PayPal Integration    | ![Login With Gmail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChangesGrey.svg)       |
+| Add to Cart    | ![Login With Gmail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)       |
+| PayPal Integration    | ![Login With Gmail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)       |
 
 ## Frontend: Vue.js
 
