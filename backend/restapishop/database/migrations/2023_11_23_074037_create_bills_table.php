@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('user_id');
             $table->decimal('quantity');
-            $table->decimal('total_amout');
+            $table->decimal('total_amount');
             $table->enum('status', ['thanh_toan_thanh_cong', 'dang_giao_hang', 'da_nhan']);
 
             $table->foreign('product_id')

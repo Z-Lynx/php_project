@@ -81,7 +81,33 @@ class ImageProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $imageProduct = ImageProducts::find($id);
+
+        if(!$imageProduct) {
+            return $this->errorResponse(
+                'Product not found',
+                404
+            );
+        }
+
+        $requestData = $request->all();
+
+        if($request->hasFile('image')) {
+            $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('local')->put('public/product_image/' . $imageName, file_get_contents($request->image));
+            $requestData['image'] = $imageName;
+
+            // Delete the associated image
+            Storage::delete('public/product_image/' . $imageProduct->image);
+        }
+
+        $imageProduct->update($requestData);
+
+        return $this->successResponse(
+            new ImageResource($imageProduct),
+            'Product updated successfully',
+            200
+        );
     }
 
     /**
@@ -89,6 +115,24 @@ class ImageProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $imageProduct = ImageProducts::find($id);
+
+        if(!$imageProduct) {
+            return $this->errorResponse(
+                'Product not found',
+                404
+            );
+        }
+
+        // Delete the associated image
+        Storage::delete('public/product_image/' . $imageProduct->image);
+
+        $imageProduct->delete();
+
+        return $this->successResponse(
+            new ImageResource($imageProduct),
+            'Product deleted successfully',
+            200
+        );
     }
 }

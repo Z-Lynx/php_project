@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CartResource;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Models\Carts;
@@ -14,14 +15,12 @@ class CartsController extends Controller
      */
     public function index()
     {
-        $perPage = 20;
-        $carts = Carts::paginate($perPage);
-        
+        $carts = Carts::all();
+        $carts = CartResource::collection($carts);
         return $this->successResponse(
-            $carts->toArray()['data'],
+            $carts,
             '',
             200,
-            $carts->toArray()
         );
     }
 
@@ -38,7 +37,21 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'user_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer',
+            'price' => 'required|integer',
+        ]);
+
+        $cart = Carts::create($request->all());
+
+        return $this->successResponse(
+            new CartResource($cart),
+            'Cart created successfully',
+            201
+        );
     }
 
     /**
@@ -62,7 +75,21 @@ class CartsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $cart = Carts::find($id);
+        if (!$cart) {
+            return $this->errorResponse(
+                'Cart not found',
+                404
+            );
+        }
+
+        $cart->update($request->all());
+
+        return $this->successResponse(
+            new CartResource($cart),
+            'Cart updated successfully',
+            200
+        );
     }
 
     /**
@@ -70,6 +97,20 @@ class CartsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cart = Carts::find($id);
+        if (!$cart) {
+            return $this->errorResponse(
+                'Cart not found',
+                404
+            );
+        }
+
+        $cart->delete();
+
+        return $this->successResponse(
+            new CartResource($cart),
+            'Cart deleted successfully',
+            200
+        );
     }
 }

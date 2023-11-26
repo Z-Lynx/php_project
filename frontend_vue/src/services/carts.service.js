@@ -9,8 +9,10 @@ class CartsServices {
 
   addToCart(product) {
     return AxiosCustom.post("/carts", {
-      product_id: product.id,
+      user_id: product.user_id,
+      product_id: product.product_id,
       quantity: product.quantity,
+      price: product.price,
     }).then((response) => {
       return response.data;
     });

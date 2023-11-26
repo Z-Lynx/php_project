@@ -15,10 +15,11 @@ class BillsServices {
 
   createBill(bill) {
     return AxiosCustom.post("/bills", {
-      name: bill.name,
-      price: bill.price,
-      description: bill.description,
-      category_id: bill.category_id,
+      user_id: bill.user_id,
+      product_id: bill.product_id,
+      quantity: bill.quantity,
+      total_amount: bill.total_amount,
+      status: bill.status,
     }).then((response) => {
       return response.data;
     });
@@ -26,10 +27,11 @@ class BillsServices {
 
   updateBill(bill) {
     return AxiosCustom.put(`/bills/${bill.id}`, {
-      name: bill.name,
-      price: bill.price,
-      description: bill.description,
-      category_id: bill.category_id,
+      user_id: bill.user_id,
+      product_id: bill.product_id,
+      quantity: bill.quantity,
+      total_amount: bill.total_amount,
+      status: bill.status,
     }).then((response) => {
       return response.data;
     });

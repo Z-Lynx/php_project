@@ -40,7 +40,7 @@ onMounted(() => {
     .then((currentToken) => {
       if (currentToken) {
         const data = store.getters.getUser;
-        if (data.data.fcm_id != currentToken) {
+        if (data.data.fcm_id !== null && data.data.fcm_id != currentToken) {
           store.dispatch("setToken", currentToken);
           console.log("Token : " + currentToken);
         }

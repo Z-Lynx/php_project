@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
     public function getNotifications()
     {
-        $notifications = Notifications::where('user_id', 1)->get();
+        $notifications = Notifications::where('user_id', auth()->user()->id)->get();
         $notificationResources = NotificationResource::collection($notifications);
 
         return $this->successResponse($notificationResources, 'get notifications');

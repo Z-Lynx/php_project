@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Models\Bills;
+use App\Http\Resources\BillResource;
+
 class BillsController extends Controller
 {
     use HttpResponses;
@@ -13,14 +15,12 @@ class BillsController extends Controller
      */
     public function index()
     {
-        $perPage = 20;
-        $bills = Bills::paginate($perPage);
-        
+        $bills = Bills::all();
+        $bills = BillResource::collection($bills);
         return $this->successResponse(
-            $bills->toArray()['data'],
+            $bills,
             '',
-            200,
-            $bills->toArray()
+            200
         );
     }
 
@@ -37,7 +37,22 @@ class BillsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'user_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer',
+            'total_amount' => 'required|integer',
+            'status' => 'required|string',
+        ]);
+
+        $bill = Bills::create($request->all());
+
+        return $this->successResponse(
+            new BillResource($bill),
+            'Bill created successfully',
+            201
+        );
     }
 
     /**
@@ -61,7 +76,20 @@ class BillsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $bill = Bills::find($id);
+        if (!$bill) {
+            return $this->errorResponse(
+                'Bill not found',
+                404
+            );
+        }
+        $bill->update($request->all());
+
+        return $this->successResponse(
+            new BillResource($bill),
+            'Bill updated successfully',
+            200
+        );
     }
 
     /**
@@ -69,6 +97,19 @@ class BillsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $bill = Bills::find($id);
+        if (!$bill) {
+            return $this->errorResponse(
+                'Bill not found',
+                404
+            );
+        }
+        $bill->delete();
+
+        return $this->successResponse(
+            new BillResource($bill),
+            'Bill deleted successfully',
+            200
+        );
     }
 }

@@ -12,7 +12,7 @@ class Bills extends Model
         'user_id',
         'product_id',
         'quantity',
-        'total_amout',
+        'total_amount',
         'status',
     ];
 }

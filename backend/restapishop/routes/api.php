@@ -50,6 +50,8 @@ Route::post(
 // middleware auth:sanctum
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/info', [AuthController::class, 'info']);
+    Route::get('/notifications', [NotificationController::class, 'getNotifications']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/update-info', [UsersController::class, 'updateInfo']);
@@ -67,7 +69,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // is Admin
 Route::group(['middleware' => ['auth:sanctum', 'isAdmin']], function () {
 
-    Route::get('/notifications', [NotificationController::class, 'getNotifications']);
     Route::post('/notifications', [NotificationController::class, 'readNotification']);
     Route::post('/send-notifications', [NotificationController::class, 'sendNotifications']);
 

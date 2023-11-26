@@ -62,7 +62,7 @@
                     </div>
                   </td>
                   <td class="flex items-center p-4 space-x-6 whitespace-nowrap">
-                    <img class="w-10 h-10 rounded-full" :src="item.image" />
+                    <img class="w-24 h-24" :src="item.image" />
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ item.product_id }}
@@ -158,7 +158,7 @@ const showEdit = (item) => {
     formDataInputs: formDataInputs,
     isShow: true,
     isCreate: false,
-    title: "Edit Category",
+    title: "Edit image product",
     dataItem: item,
     dataSelect: dataSelect.value,
   };
@@ -193,8 +193,8 @@ const callback = async (dataCallBack) => {
   console.log(dataCallBack);
   try {
     if (dataPopUpItem.value.isCreate) {
-      const category = await ImageProductsService.createImageProduct(dataCallBack);
-      data.value.push(category.data);
+      const imageProduct = await ImageProductsService.createImageProduct(dataCallBack);
+      data.value.push(imageProduct.data);
       toast.add({
         severity: "success",
         summary: "Success",
@@ -202,13 +202,9 @@ const callback = async (dataCallBack) => {
         life: 1500,
       });
     } else {
-      const category = await ImageProductsService.updateImageProduct(dataCallBack);
-      data.value = data.value.map((item) => {
-        if (item.id === category.data.id) {
-          return category.data;
-        }
-        return item;
-      });
+      const imageProduct = await ImageProductsService.updateImageProduct(dataCallBack);
+      const index = data.value.findIndex((item) => item.id === imageProduct.data.id);
+      data.value[index] = imageProduct.data;
 
       toast.add({
         severity: "success",
@@ -258,4 +254,5 @@ const callbackChoose = (choose) => {
     dataItem: {},
   };
 };
+
 </script>

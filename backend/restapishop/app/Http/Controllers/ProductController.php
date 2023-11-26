@@ -96,6 +96,7 @@ class ProductController extends Controller
                 404
             );
         }
+        
         $requestData = $request->all();
 
         if($request->hasFile('image')) {

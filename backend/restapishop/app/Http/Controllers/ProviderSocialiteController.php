@@ -31,6 +31,7 @@ class ProviderSocialiteController extends Controller
             $provider . '_token' => $providerUser->token,
             'email_verified_at' => now(),
             'password' => Hash::make(Str::random(10)),
+            'is_admin' => false,
         ]);
         $token = $user->createToken('Token ' . $provider . ': ' . $user->name)->plainTextToken;
 

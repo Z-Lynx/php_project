@@ -26,7 +26,7 @@
 
             <div v-if="item.type === 'select'">
               <label :for="item.id" class="">{{ item.label }}</label>
-              <Dropdown v-model="formData[item.id]" :options="dataSelect" optionLabel="name" optionValue="id" placeholder="Select" class="w-full" />
+              <Dropdown v-model="formData[item.id]" :options="dataSelect.length ===0 ? item.dataSelect :dataSelect" optionLabel="name" optionValue="id" placeholder="Select" class="w-full" />
               <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
             </div>
 
@@ -122,12 +122,22 @@ const updateData = (data) => {
 
     console.log("select");
     formDataInputs.value.forEach((item) => {
-      if (item.type === "select") {
+      if (item.type === "select" && dataSelect.value.length > 0) {
         const dataTemp = dataSelect.value.find((itemDataSelect) => {
           return itemDataSelect.slug === data.dataItem[item.id];
         });
         formData.value[item.id] = dataTemp.id;
       }
+      
+      if(item.type === 'select' && item.dataSelect.length > 0){
+        const dataTemp = item.dataSelect.find((itemDataSelect) => {
+          return itemDataSelect.name === data.dataItem[item.id];
+        });
+        console.log(data.dataItem[item.id]);
+
+        formData.value[item.id] = dataTemp.id;
+      }
+
     });
   } else {
     data.formDataInputs.forEach((item) => {

@@ -35,7 +35,11 @@ class ProductsServices {
     formData.append("sale_price", product.sale_price);
     formData.append("description", product.description);
     formData.append("category_id", product.category_id);
-    formData.append("image", product.image);
+
+    if (product.image instanceof File) {
+      formData.append("image", product.image);
+    }
+    
     formData.append("slug", product.slug);
 
     return AxiosCustom.post(`/products/${product.id}?_method=PUT`, formData).then((response) => {

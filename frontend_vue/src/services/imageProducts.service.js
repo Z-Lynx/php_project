@@ -16,7 +16,11 @@ class ImageProductsService {
   createImageProduct(imageProduct) {
     const formData = new FormData();
     formData.append("product_id", imageProduct.product_id);
-    formData.append("image", imageProduct.image);
+
+    if (imageProduct.image instanceof File) {
+      formData.append("image", imageProduct.image);
+    }
+    
 
     return AxiosCustom.post("/image-products", formData).then((response) => {
       return response.data;
@@ -26,9 +30,12 @@ class ImageProductsService {
   updateImageProduct(imageProduct) {
     const formData = new FormData();
     formData.append("product_id", imageProduct.product_id);
-    formData.append("image", imageProduct.image);
+    
+    if (imageProduct.image instanceof File) {
+      formData.append("image", imageProduct.image);
+    }
 
-    return AxiosCustom.put(`/image-products/${imageProduct.id}?_method=PUT`, formData).then((response) => {
+    return AxiosCustom.post(`/image-products/${imageProduct.id}?_method=PUT`, formData).then((response) => {
       return response.data;
     });
   }
