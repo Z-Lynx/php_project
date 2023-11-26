@@ -47,20 +47,11 @@ class NotificationController extends Controller
     public function sendNotifications(Request $request)
     {
         $user = User::find($request->user_id);
-        
-        if($user->get_fcm()  != null) {
-            $fcmNotification = new FCMNotification();
-            $status = $fcmNotification->sendNotification($request->data, $user->get_fcm());
-        }
-        
-        $notification = Notifications::create([
-            'user_id' => auth()->user()->id,
-            'read_at' => null,
-            'data' => $request->data,
-            'type' => 'info',
-        ]);
 
-        broadcast(new PodcastProcessed($notification));
+        $fcmNotification = new FCMNotification();
+        $fcmNotification->sendNotification($request->data, $user);
+
+
 
         return $this->successResponse('', 'send notifications successfully');
 

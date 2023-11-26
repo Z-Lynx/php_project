@@ -19,12 +19,14 @@
               <div class="flex items-center">
                 <span class="mr-3">Quantity</span>
                 <div class="relative">
-                  <input v-model="quantity" type="number" id="quantity" name="quantity" min="1" max="5" class="w-16 h-8 pl-2 bg-white border rounded-md text-gray-900 focus:outline-none focus:border-orange-500 text-center" />
+                  <input @change="updatePrice" v-model="quantity" type="number" id="quantity" name="quantity" min="1" max="5" class="w-16 h-8 pl-2 bg-white border rounded-md text-gray-900 focus:outline-none focus:border-orange-500 text-center" />
                 </div>
               </div>
             </div>
             <div class="flex">
-              <span class="title-font font-medium text-2xl text-gray-900">{{ data.price }} $</span>
+              <span class="title-font font-medium text-2xl text-gray-900 line-through">{{ data.price }} $</span>
+              <span class="ml-10 title-font font-medium text-2xl text-gray-900">{{ truePrice }} $</span>
+
               <button @click="handleAddToCart" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Add to cart</button>
             </div>
           </div>
@@ -44,11 +46,15 @@ const data = ref(null);
 const route = useRoute();
 const srcImage = ref("");
 const dataImageDetail = ref([]);
+const truePrice = ref(0);
+
 onMounted(async () => {
   const productId = ref(route.params.id);
   const response = await ClientService.getProductDetail(productId.value);
 
   srcImage.value = response.data.image;
+  truePrice.value = response.data.sale_price;
+
   dataImageDetail.value = response.data.image_detail;
   dataImageDetail.value.unshift({ image: response.data.image });
   console.log(dataImageDetail.value);
@@ -71,4 +77,9 @@ const handleAddToCart = async () => {
     console.log(err);
   }
 };
+
+const updatePrice = () => {
+  truePrice.value = data.value.sale_price * quantity.value;
+};
+
 </script>

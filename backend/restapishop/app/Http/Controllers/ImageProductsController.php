@@ -41,7 +41,7 @@ class ImageProductsController extends Controller
     {
         $request->validate([
             'product_id' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4048',
         ]);
         
         $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();

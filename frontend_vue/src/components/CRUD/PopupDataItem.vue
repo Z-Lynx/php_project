@@ -26,7 +26,7 @@
 
             <div v-if="item.type === 'select'">
               <label :for="item.id" class="">{{ item.label }}</label>
-              <Dropdown v-model="formData[item.id]" :options="dataSelect.length ===0 ? item.dataSelect :dataSelect" optionLabel="name" optionValue="id" placeholder="Select" class="w-full" />
+              <Dropdown v-model="formData[item.id]" :options="dataSelect.length === 0 ? item.dataSelect : dataSelect" optionLabel="name" optionValue="id" placeholder="Select" class="w-full" />
               <span v-if="isSubmit && !handleErrorForm(item)" class="text-red-500 text-sm">{{ item.error_label }}</span>
             </div>
 
@@ -128,8 +128,8 @@ const updateData = (data) => {
         });
         formData.value[item.id] = dataTemp.id;
       }
-      
-      if(item.type === 'select' && item.dataSelect.length > 0){
+
+      if (item.dataSelect !== null && item.dataSelect !== undefined && item.type === "select" && item.dataSelect.length > 0) {
         const dataTemp = item.dataSelect.find((itemDataSelect) => {
           return itemDataSelect.name === data.dataItem[item.id];
         });
@@ -137,7 +137,6 @@ const updateData = (data) => {
 
         formData.value[item.id] = dataTemp.id;
       }
-
     });
   } else {
     data.formDataInputs.forEach((item) => {
@@ -227,6 +226,7 @@ const submit = () => {
       });
       emit("submit", dataItem.value);
     }
+    isSubmit.value = false;
   }
 };
 
