@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'auth_type',
         'is_admin',
         'email_verified_at',
+        'fcm_id',
     ];
 
     /**
@@ -67,9 +68,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->is_admin;
     }
-    public function routeNotificationForFcm()
+    public function get_fcm()
     {
-        $FcmToken = 'fe7dH44JLkbKlgCujqbI6_:APA91bFE16JKyViu2Hd3Kmeea2kZBxweZcXL6_sB8WXQdRDFbuVObB8xSFoQcSCf8T8G3RTDK__MCdt8hFHtSQLIE5TO3k05PHmwEEdswQSKLokVPGhk2TRiO1aQZZI7RyEmcDe0SSWw';
-        return $FcmToken;
+        return $this->fcm_id;
     }
 }

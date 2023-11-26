@@ -13,6 +13,15 @@ export function setUser(state, payload) {
   state.user.token = payload.token;
 }
 
+export function setToken(state, token) {
+  state.user.data.fcm_id = token;
+  
+  // over write user
+  const user = JSON.parse(localStorage.getItem("user"));
+  user.fcm_id = token;
+  localStorage.setItem("user", JSON.stringify(user));
+}
+
 export function removeUser(state) {
   localStorage.removeItem("user");
   Cookies.remove("token");
@@ -56,5 +65,6 @@ export function readNotifications(state, idNotifications) {
       notification.read_at = true;
     }
   });
-  state.user.countNotifications = state.user.notifications.filter((item) => item.read_at === false).length;
+  state.user.countNotifications -= 1;
 }
+

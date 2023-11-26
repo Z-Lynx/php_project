@@ -68,6 +68,14 @@ class AuthService {
     });
   }
 
+  setToken(payload) {
+    return AxiosCustom.post("set-token", {
+      fcm_id: payload,
+    }).then((response) => {
+      return response.data;
+    });
+  }
+
   getNotifications() {
     return AxiosCustom.get("notifications").then((response) => {
       return response.data;

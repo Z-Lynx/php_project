@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'is_active' => $this->email_verified_at !== null,
             'avatar' => filter_var($this->avatar, FILTER_VALIDATE_URL) ? $this->avatar : url('/api/images/' . basename($this->avatar)),
             'is_admin' => $this->is_admin === 0 ? false : true,
+            'fcm_id' => $this->fcm_id,
         ];
     }
 }

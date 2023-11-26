@@ -24,7 +24,6 @@ const messaging = getMessaging(app);
 
 onMessage(messaging, (payload) => {
   console.log("Message received. ", payload);
-  // ...
 });
 
 Notification.requestPermission();
@@ -36,19 +35,24 @@ if (data.token) {
 }
 
 onMounted(() => {
+  //fcm
   getToken(messaging, { vapidKey: "BGOX4JOSweQOG9tEhpF4IOBowWOfkuRRlwsdoda_Oo9Dkd4a_LY-wem1zSK26g0Op6C3bDvRzRwWsCbQHvSlhLY" })
     .then((currentToken) => {
       if (currentToken) {
-        console.log("Token : " + currentToken);
+        const data = store.getters.getUser;
+        if (data.data.fcm_id != currentToken) {
+          store.dispatch("setToken", currentToken);
+          console.log("Token : " + currentToken);
+        }
       } else {
         console.log("No registration token available. Request permission to generate one.");
       }
     })
     .catch((err) => {
       console.log("An error occurred while retrieving token. ", err);
-      // ...
     });
 
+  // pusher
   var pusher = new Pusher("9799d9bf3eb9505ba6a8", {
     cluster: "ap1",
   });

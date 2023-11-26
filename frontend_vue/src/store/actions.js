@@ -9,6 +9,15 @@ export async function getUser({ commit }) {
   }
 }
 
+export async function setToken({ commit }, payload) {
+  try {
+    const resData = await authService.setToken(payload);
+    commit("setToken", payload);
+  } catch (e) {
+    commit("removeUser");
+  }
+}
+
 export async function getNotifications({ commit }) {
   try {
     const resData = await authService.getNotifications();

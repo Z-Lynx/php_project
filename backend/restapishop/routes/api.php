@@ -59,6 +59,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // payment
     Route::get('/vnpay-payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
     Route::get('/vnpay-payment/callback', [PaymentController::class, 'vnpay_payment_callback'])->name('vnpay_payment_callback');
+
+    // set token fcm
+    Route::post('/set-token', [NotificationController::class, 'setToken']);
 });
 
 // is Admin
