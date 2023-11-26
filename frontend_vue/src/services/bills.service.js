@@ -1,8 +1,8 @@
 import AxiosCustom from "../instance/http-common";
 
 class BillsServices {
-  getBills(page = 1) {
-    return AxiosCustom.get("/bills?page=" + page).then((response) => {
+  getBills() {
+    return AxiosCustom.get("/bills").then((response) => {
       return response.data;
     });
   }

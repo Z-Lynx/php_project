@@ -1,8 +1,8 @@
 import AxiosCustom from "../instance/http-common";
 
 class CategoriesService {
-  getCategories(page = 1) {
-    return AxiosCustom.get("/categories?page=" + page).then((response) => {
+  getCategories() {
+    return AxiosCustom.get("/categories").then((response) => {
       return response.data;
     });
   }

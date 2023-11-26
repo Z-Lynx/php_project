@@ -104,7 +104,6 @@
       </div>
     </div>
 
-    <Paging :data="dataPaginated" />
     <PopupDataItem :data="dataPopUpItem" @submit="callback" />
     <DelItem :data="dataPopUpDelete" @choose="callbackChoose" />
   </main>

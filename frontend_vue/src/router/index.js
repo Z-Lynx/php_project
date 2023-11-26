@@ -19,6 +19,8 @@ import AdminLayout from "../components/admin/AdminLayout.vue";
 import Users from "../views/Admin/Users.vue";
 import Carts from "../views/Admin/Carts.vue";
 import Bills from "../views/Admin/Bills.vue";
+import SendNotifications from "../views/Admin/SendNotifications.vue";
+import ImageProducts from "../views/Admin/ImageProducts.vue";
 
 const routes = [
   {
@@ -110,6 +112,14 @@ const routes = [
         },
       },
       {
+        path: "image-products",
+        name: "image-products",
+        component: ImageProducts,
+        meta: {
+          requiresAdmin: true,
+        },
+      },
+      {
         path: "users",
         name: "product",
         component: Users,
@@ -133,6 +143,14 @@ const routes = [
           requiresAdmin: true,
         },
       },
+      {
+        path: "send-notification",
+        name: "send-notification",
+        component: SendNotifications,
+        meta: {
+          requiresAdmin: true,
+        },
+      }
     ],
   },
   {

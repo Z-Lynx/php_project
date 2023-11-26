@@ -14,14 +14,12 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $perPage = 20;
-        $categories = Categories::paginate($perPage);
+        $categories = Categories::all();
 
         return $this->successResponse(
-            $categories->toArray()['data'],
+            $categories,
             '',
             200,
-            $categories->toArray()
         );
     }
 
@@ -73,7 +71,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, Categories $category)
     {
-        if(!$category) {
+        if (!$category) {
             return $this->errorResponse(
                 'Category not found',
                 404
@@ -96,7 +94,7 @@ class CategoriesController extends Controller
     {
         $category = Categories::find($id);
 
-        if(!$category) {
+        if (!$category) {
             return $this->errorResponse(
                 'Category not found',
                 404

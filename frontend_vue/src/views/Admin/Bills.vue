@@ -85,7 +85,6 @@
       </div>
     </div>
 
-    <Paging :data="dataPaginated" />
   </main>
 </template>
 

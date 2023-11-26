@@ -1,8 +1,8 @@
 import AxiosCustom from "../instance/http-common";
 
 class UsersService {
-  getUsers(page = 1) {
-    return AxiosCustom.get("/users?page=" + page).then((response) => {
+  getUsers() {
+    return AxiosCustom.get("/users").then((response) => {
       return response.data;
     });
   }
@@ -37,6 +37,15 @@ class UsersService {
 
   deleteUser(id) {
     return AxiosCustom.delete(`/users/${id}`).then((response) => {
+      return response.data;
+    });
+  }
+
+  sendNotification(payload) {
+    return AxiosCustom.post(`send-notifications`, {
+      user_id: payload.user_id,
+      data: payload.data,
+    }).then((response) => {
       return response.data;
     });
   }

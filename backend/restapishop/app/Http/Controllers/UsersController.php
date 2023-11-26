@@ -16,15 +16,13 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $perPage = 20;
-        $users = User::paginate($perPage);
+        $users = User::all();
         $data = UsersResources::collection($users);
 
         return $this->successResponse(
             $data,
             '',
-            200,
-            $users->toArray()
+            200
         );
     }
 

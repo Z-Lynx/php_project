@@ -44,21 +44,23 @@ watch(
 );
 
 function updateData(data) {
-  current_page.value = data.current_page;
-  last_page.value = data.last_page;
-  next_page_url.value = data.next_page_url;
-  per_page.value = data.per_page;
-  prev_page_url.value = data.prev_page_url;
-  to.value = data.to;
-  from.value = data.from;
-  total.value = data.total;
+  if (data) {
+    current_page.value = data.current_page;
+    last_page.value = data.last_page;
+    next_page_url.value = data.next_page_url;
+    per_page.value = data.per_page;
+    prev_page_url.value = data.prev_page_url;
+    to.value = data.to;
+    from.value = data.from;
+    total.value = data.total;
 
-  if (next_page_url.value != null) {
-    next_page_url.value = window.location.href.split("?")[0] + "?" + next_page_url.value.split("?")[1];
-  }
+    if (next_page_url.value != null) {
+      next_page_url.value = window.location.href.split("?")[0] + "?" + next_page_url.value.split("?")[1];
+    }
 
-  if (prev_page_url.value != null) {
-    prev_page_url.value = window.location.href.split("?")[0] + "?" + prev_page_url.value.split("?")[1];
+    if (prev_page_url.value != null) {
+      prev_page_url.value = window.location.href.split("?")[0] + "?" + prev_page_url.value.split("?")[1];
+    }
   }
 }
 </script>

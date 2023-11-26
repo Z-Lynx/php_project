@@ -16,14 +16,12 @@ class ProductController extends Controller
 
     public function index()
     {
-        $perPage = 10;
-        $products = Product::paginate($perPage);
+        $products = Product::all();
         $productData = ProductResource::collection($products);
         return $this->successResponse(
             $productData,
             '',
-            200,
-            $products->toArray()
+            200
         );
     }
 

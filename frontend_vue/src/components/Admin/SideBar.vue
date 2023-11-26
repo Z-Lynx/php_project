@@ -56,8 +56,9 @@ const menuItems = [
   { id: "users", label: "Users", link: "/admin/users", icon: "fa-solid fa-user" },
   { id: "categories", label: "Categories", link: "/admin/categories", icon: "fa-solid fa-certificate" },
   { id: "products", label: "Products", link: "/admin/products", icon: "fa-solid fa-bag-shopping" },
+  { id: "image-products", label: "Image Products", link: "/admin/image-products", icon: "fa-solid fa-image" },
   { id: "carts", label: "Carts", link: "/admin/carts", icon: "fa-solid fa-cart-plus" },
   { id: "billings", label: "Billings", link: "/admin/bills", icon: "fa-solid fa-money-bill" },
-  { id: "send-notifications", label: "Send Notifications", link: "/admin/notifications", icon: "fa-solid fa-bell" },
+  { id: "send-notifications", label: "Send Notifications", link: "/admin/send-notification", icon: "fa-solid fa-bell" },
 ];
 </script>

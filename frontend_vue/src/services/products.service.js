@@ -1,8 +1,8 @@
 import AxiosCustom from "../instance/http-common";
 
 class ProductsServices {
-  getProducts(page = 1) {
-    return AxiosCustom.get("/products?page=" + page).then((response) => {
+  getProducts() {
+    return AxiosCustom.get("/products").then((response) => {
       return response.data;
     });
   }

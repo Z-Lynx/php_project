@@ -82,7 +82,7 @@ const login = () => {
           severity: "success",
           summary: "Login successful",
           detail: response.message,
-          life: 1500,
+          life: 2500,
         });
         router.push("/");
       })
@@ -93,7 +93,7 @@ const login = () => {
           severity: "error",
           summary: "Login failed",
           detail: error.response.data.message,
-          life: 1500,
+          life: 2500,
         });
       });
   }
