@@ -13,7 +13,7 @@
         <button @click="resendActivate" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Resend Activation Email</button>
       </div>
     </div>
-    <div class="flex-grow px-3">
+    <div class="flex-grow px-3 pb-10">
       <RouterView />
     </div>
     <Footer />
