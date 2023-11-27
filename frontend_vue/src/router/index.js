@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import store from "../store";
+import { useRouter } from "vue-router";
+import { useToast } from "primevue/usetoast";
 import AppLayout from "../components/Guest/AppLayout.vue";
 import AuthLayout from "../components/Guest/AuthLayout.vue";
 
@@ -180,6 +182,9 @@ const routes = [
         name: "my-cart",
         component: Checkout,
         path: "my-cart",
+        meta: {
+          requiresAuth: true,
+        },
       },
     ],
   },
@@ -191,4 +196,44 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  const router = useRouter();
+  const toast = useToast();
+  if(to.meta.requiresGuest) {
+    next();
+  }
+
+  if(to.meta.requiresAuth) {
+    const user = store.getters.getUser;
+    if(user.data && user.token) {
+      console.log("123")
+      next();
+    } else {
+      toast.add({
+        severity: "error",
+        summary: "Error Message",
+        detail: "Please login to continue",
+        life: 3000,
+      });
+      router.push({ name: "login" });
+    }
+  }
+
+  if(to.meta.requiresAdmin) {
+    const user = store.getters.getUser;
+
+    if(user.data && user.data.is_admin === "admin") {
+      next();
+    } else {
+      toast.add({
+        severity: "error",
+        summary: "Error Message",
+        detail: "You are not admin",
+        life: 3000,
+      });
+      router.push("/home");
+    }
+  }
+
+});
 export default router;
