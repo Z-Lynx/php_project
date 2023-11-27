@@ -34,7 +34,13 @@
           </p>
         </div>
         <hr class="mt-4 mb-8" />
-
+        <p class="py-2 text-xl font-semibold">Address</p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-gray-600">
+          288 Lê Duẫn, Hải Châu, Đà Nẵng
+          </p>
+        </div>
+        <hr class="mt-4 mb-8" />
         <p class="py-2 text-xl font-semibold">Name</p>
         <div class="flex flex-col">
           <p class="text-gray-600">

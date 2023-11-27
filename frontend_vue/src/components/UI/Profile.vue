@@ -46,10 +46,10 @@
     </div>
 
     <div class="flex items-center space-x-3" v-else>
-      <router-link to="auth/login">
+      <router-link to="/auth/login">
         <button class="hidden md:block bg-black text-white px-3 py-1">SIGN IN</button>
       </router-link>
-      <router-link to="auth/register">
+      <router-link to="/auth/register">
         <button class="hidden lg:block bg-white text-black px-3 py-1 border border-black" @click="login">SIGN UP</button>
       </router-link>
     </div>
