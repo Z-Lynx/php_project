@@ -15,35 +15,37 @@ import AuthService from "../../services/auth.service";
 import Logo from "../../components/UI/Logo.vue";
 import { useToast } from "primevue/usetoast";
 
-const toast = useToast();
-const router = useRouter();
-const route = useRoute();
+onMounted(() => {
+  const toast = useToast();
+  const router = useRouter();
+  const route = useRoute();
 
-const id = ref(route.params.id);
-const token = ref(route.params.token);
-const expires = ref(route.query.expires);
-const signature = ref(route.query.signature);
-const code = ref(id.value + "/" + token.value + "?expires=" + expires.value + "&signature=" + signature.value);
+  const id = ref(route.params.id);
+  const token = ref(route.params.token);
+  const expires = ref(route.query.expires);
+  const signature = ref(route.query.signature);
+  const code = ref(id.value + "/" + token.value + "?expires=" + expires.value + "&signature=" + signature.value);
 
-AuthService.activateUser(code.value)
-  .then((response) => {
-    toast.add({
-      severity: "success",
-      summary: "Verify Email successful",
-      detail: response.message,
-      life: 1500,
+  AuthService.activateUser(code.value)
+    .then((response) => {
+      toast.add({
+        severity: "success",
+        summary: "Verify Email successful",
+        detail: response.message,
+        life: 1500,
+      });
+
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Verify Email failed",
+        detail: error.response.data.message,
+        life: 1500,
+      });
     });
-
-    setTimeout(() => {
-      router.push("/");
-    }, 1000);
-  })
-  .catch((error) => {
-    toast.add({
-      severity: "error",
-      summary: "Verify Email failed",
-      detail: error.response.data.message,
-      life: 1500,
-    });
-  });
+});
 </script>

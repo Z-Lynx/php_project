@@ -73,6 +73,9 @@ const routes = [
     path: "/verify/:id/:token",
     name: "verify",
     component: VerifyEmail,
+    meta: {
+      requiresGuest: true,
+    },
   },
   {
     path: "/:pathMatch(.*)",
@@ -259,6 +262,6 @@ router.beforeEach((to, from, next) => {
       router.push("/home");
     }
   }
-
+  next();
 });
 export default router;
