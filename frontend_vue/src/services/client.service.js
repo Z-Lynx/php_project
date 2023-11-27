@@ -1,6 +1,25 @@
 import AxiosCustom from "../instance/http-common";
 
 class ClientService {
+  updateProfile(payload) {
+    if (payload.hasOwnProperty("image")) {
+      const formData = new FormData();
+      formData.append("image", payload.image);
+
+      return AxiosCustom.post("/update-profile", formData).then((response) => {
+        return response.data;
+      });
+    }
+    return AxiosCustom.post("/update-profile", payload).then((response) => {
+      return response.data;
+    });
+  }
+
+  getMyOrder() {
+    return AxiosCustom.get("/my-order").then((response) => {
+      return response.data;
+    });
+  }
   getProducts(page = 1) {
     return AxiosCustom.get("/get-products?page=" + page).then((response) => {
       return response.data;

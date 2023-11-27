@@ -10,6 +10,10 @@ export async function getUser({ commit }) {
   }
 }
 
+export async function updateProfile({ commit }, payload) {
+  commit("updateProfile", payload);
+}
+
 export async function setToken({ commit }, payload) {
   try {
     const resData = await authService.setToken(payload);

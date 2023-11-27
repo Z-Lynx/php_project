@@ -2,17 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BillResource;
 use App\Http\Resources\ProductClientResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Models\Product;
 use App\Models\Carts;
 use App\Http\Resources\CartClientResource;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Bills;
 
 class ClientController extends Controller
 {
     use HttpResponses;
 
+    public function updateInfo(Request $request)
+    {
+        if ($request->has('password')) {
+            $request->validate([
+                'current_password' => 'required',
+                'password' => 'required|min:8',
+            ]);
+            $user = $request->user();
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return $this->errorResponse(
+                    'Mật khẩu hiện tại không đúng',
+                    400
+                );
+            }
+
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->has('name')) {
+            $request->validate([
+                'name' => 'required',
+            ]);
+            $user = $request->user();
+            $user->name = $request->name;
+        }
+
+        if ($request->has('image')) {
+            $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:4048',
+            ]);
+
+            $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('local')->put('public/images/' . $imageName, file_get_contents($request->image));
+
+            $user = $request->user();
+            $user->avatar = $imageName;
+        }
+
+        $user->save();
+
+        return $this->successResponse(
+            new UserResource($user),
+            'Cập nhật thành công',
+            200
+        );
+    }
+    public function myOrder(Request $request)
+    {
+        $bill = Bills::where('user_id', $request->user()->id)->get();
+        $bill = BillResource::collection($bill);
+        return $this->successResponse(
+            $bill,
+            '',
+            200
+        );
+    }
     public function getProducts(Request $request)
     {
 
@@ -38,7 +101,7 @@ class ClientController extends Controller
             200
         );
     }
-    
+
     public function getCarts(Request $request)
     {
         $carts = Carts::where('user_id', $request->user()->id)->get();
@@ -56,7 +119,7 @@ class ClientController extends Controller
             'product_id' => 'required',
             'quantity' => 'required'
         ]);
-        
+
         $cart = Carts::create([
             'user_id' => $request->user()->id,
             'product_id' => $request->product_id,
@@ -75,7 +138,7 @@ class ClientController extends Controller
     {
         $cart = Carts::find($id);
 
-        if($request->quantity < 1) {
+        if ($request->quantity < 1) {
             $cart->delete();
             return $this->successResponse(
                 $cart->toArray(),

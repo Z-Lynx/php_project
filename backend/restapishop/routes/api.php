@@ -64,7 +64,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/notifications', [NotificationController::class, 'readNotification']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/update-info', [UsersController::class, 'updateInfo']);
+    Route::post('/update-profile', [ClientController::class, 'updateInfo']);
+    Route::get('/my-order', [ClientController::class, 'myOrder']);
 
     // Set token fcm
     Route::post('/set-token', [NotificationController::class, 'setToken']);

@@ -23,6 +23,8 @@ import Carts from "../views/Admin/Carts.vue";
 import Bills from "../views/Admin/Bills.vue";
 import SendNotifications from "../views/Admin/SendNotifications.vue";
 import ImageProducts from "../views/Admin/ImageProducts.vue";
+import Setting from "../views/Other/Setting.vue";
+import MyOrder from "../views/Other/MyOrder.vue";
 
 const routes = [
   {
@@ -195,6 +197,22 @@ const routes = [
           requiresAuth: true,
         },
       },
+      {
+        name: "setting",
+        component: Setting,
+        path: "setting",
+        meta: {
+          requiresAuth: true,
+        },
+      },
+      {
+        name: "my-order",
+        component: MyOrder,
+        path: "my-order",
+        meta: {
+          requiresAuth: true,
+        },
+      }
     ],
   },
 ];

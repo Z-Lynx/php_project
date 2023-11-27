@@ -5,6 +5,11 @@ export function getUser(state, user) {
   state.user.data = user;
 }
 
+export function updateProfile(state, payload) {
+  state.user.data = payload;
+  localStorage.setItem("user", JSON.stringify(payload));
+}
+
 export function setUser(state, payload) {
   localStorage.setItem("user", JSON.stringify(payload.user));
   Cookies.set("token", payload.token, { expires: 10080, path: "/" });

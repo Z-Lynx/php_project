@@ -6,7 +6,7 @@
           <i id="user-notifications" class="fa-solid fa-bell fa-2x"></i>
           <div v-if="countNotifications > 0" class="absolute top-0 right-0">
             <div class="bg-red-500 flex justify-center w-4 h-4 rounded-full">
-              <p class="text-sm">
+              <p class="text-[0.75rem]">
                 {{ countNotifications }}
               </p>
             </div>
@@ -55,7 +55,7 @@
     </div>
 
     <router-link class="relative" to="/my-cart">
-      <i class="fa-solid fa-cart-shopping fa-2x"></i>
+      <i class="fa-solid fa-cart-shopping fa-2x mr-2"></i>
       <div v-if="countItemCart > 0" class="absolute top-0 right-0">
         <div class="bg-red-500 flex justify-center w-4 h-4 rounded-full">
           <div class="text-[0.75rem]">
@@ -85,13 +85,14 @@ const notifications = computed(() => store.state.user.notifications);
 const countNotifications = computed(() => store.state.user.countNotifications);
 
 const menuItems = [
-  { id: "settings", label: "Settings", link: "#1" },
+  { id: "settings", label: "Settings", link: "/setting" },
+  { id: "my-order", label: "My Order", link: "/my-order" },
   { id: "logout", label: "Sign out", link: "#2" },
 ];
 
 const menuAdminItems = [
   { id: "dashboard", label: "Dashboard", link: "/admin/dashboard" },
-  { id: "settings", label: "Settings", link: "#2" },
+  { id: "settings", label: "Settings", link: "/setting" },
   { id: "logout", label: "Sign out", link: "#3" },
 ];
 
