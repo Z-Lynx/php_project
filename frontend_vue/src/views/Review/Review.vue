@@ -38,12 +38,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import ClientService from "../../services/client.service";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import store from "../../store";
+import Cookies from "js-cookie";
+import { useToast } from "primevue/usetoast";
 
 const quantity = ref(1);
 const data = ref(null);
 const route = useRoute();
+const router = useRouter();
+const toast = useToast();
+
 const srcImage = ref("");
 const dataImageDetail = ref([]);
 const truePrice = ref(0);
@@ -66,6 +71,17 @@ const handleChangeImage = (item) => {
 };
 
 const handleAddToCart = async () => {
+  const token = Cookies.get("token");
+
+  if(!token) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "You need to login to add to cart",
+      life: 3000,
+    });
+    router.push("/auth/login");
+  }
   try {
     const dataCart = {
       product_id: data.value.id,
