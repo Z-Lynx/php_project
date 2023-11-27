@@ -167,16 +167,25 @@ const routes = [
         name: "Home",
         component: Products,
         path: "/home",
+        meta: {
+          requiresGuest: true,
+        },
       },
       {
         name: "Product",
         component: Products,
         path: "products",
+        meta: {
+          requiresGuest: true,
+        },
       },
       {
         name: "product-details",
         component: Review,
         path: "product-details/:id",
+        meta: {
+          requiresGuest: true,
+        },
       },
       {
         name: "my-cart",
@@ -206,7 +215,6 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth) {
     const user = store.getters.getUser;
     if(user.data && user.token) {
-      console.log("123")
       next();
     } else {
       toast.add({
@@ -221,8 +229,7 @@ router.beforeEach((to, from, next) => {
 
   if(to.meta.requiresAdmin) {
     const user = store.getters.getUser;
-
-    if(user.data && user.data.is_admin === "admin") {
+    if(user.data && user.data.is_admin) {
       next();
     } else {
       toast.add({

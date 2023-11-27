@@ -25,7 +25,7 @@ export function setToken(state, token) {
 export function removeUser(state) {
   localStorage.removeItem("user");
   Cookies.remove("token");
-  
+
   state.user.data = null;
   state.user.token = null;
 
@@ -93,4 +93,9 @@ export function updateCart(state, product) {
 export function removeCart(state, cart) {
   state.cart.data = state.cart.data.filter((item) => item.id !== cart.id);
   state.cart.count -= 1;
+}
+
+export function removeAllCart(state) {
+  state.cart.data = [];
+  state.cart.count = 0;
 }

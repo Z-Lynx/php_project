@@ -18,6 +18,7 @@ class BillResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'vn_pay_code' => $this->vn_pay_code,
             'user_id' => User::find($this->user_id)->name,
             'product_id' => Product::find($this->product_id)->name,
             'quantity' => $this->quantity,

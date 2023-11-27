@@ -62,6 +62,9 @@
                     </div>
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ item.vn_pay_code }}
+                  </td>
+                  <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ item.user_id }}
                   </td>
                   <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -116,7 +119,7 @@ import DelItem from "../../components/CRUD/DelItem.vue";
 
 const toast = useToast();
 
-const columns = ["User", "Product", "Quantity", "Total amount", "Status", "Action"];
+const columns = ["VN_PAY_CODE", "User", "Product", "Quantity", "Total amount", "Status", "Action"];
 const data = ref([]);
 const dataPaginated = ref({});
 const route = useRoute();

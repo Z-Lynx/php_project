@@ -6,6 +6,9 @@ use App\Models\Bills;
 use Illuminate\Http\Request;
 use App\Models\Carts;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\FCMNotification;
+use App\Models\User;
+
 
 class PaymentController extends Controller
 {
@@ -90,6 +93,7 @@ class PaymentController extends Controller
 
         foreach ($cart as $cartItem) {
             Bills::create([
+                'vn_pay_code' => $request['vnp_TxnRef'],
                 'user_id' => $id,
                 'product_id' => $cartItem->product_id,
                 'quantity' => $cartItem->quantity,
@@ -117,6 +121,9 @@ class PaymentController extends Controller
         );
 
         $vnp_ResponseCode = $request['vnp_ResponseCode'];
+
+        $fcmNotification = new FCMNotification();
+        $fcmNotification->sendNotification('Đơn Hàng ' . $request['vnp_TxnRef'] . 'Thanh Toán Thành Công', User::find($id));
 
         $request['message'] = isset($message[$vnp_ResponseCode]) ? $message[$vnp_ResponseCode] : 'Mã lỗi không hợp lệ';
         return view('callback', [

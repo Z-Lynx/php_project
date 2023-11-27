@@ -68,3 +68,7 @@ export async function updateCart({ commit }, payload) {
 export async function removeCart({ commit }, payload) {
   commit("removeCart", payload);
 }
+
+export async function removeAllCart({ commit }) {
+  commit("removeAllCart");
+}

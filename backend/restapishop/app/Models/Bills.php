@@ -9,6 +9,7 @@ class Bills extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'vn_pay_code',
         'user_id',
         'product_id',
         'quantity',

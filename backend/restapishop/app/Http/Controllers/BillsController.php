@@ -6,6 +6,8 @@ use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use App\Models\Bills;
 use App\Http\Resources\BillResource;
+use App\Helpers\FCMNotification;
+use App\Models\User;
 
 class BillsController extends Controller
 {
@@ -84,6 +86,16 @@ class BillsController extends Controller
             );
         }
         $bill->update($request->all());
+
+        $message = array(
+            'thanh_toan_thanh_cong' => 'Đơn hàng ' . $bill->vn_pay_code . ' đã được thanh toán thành công',
+            'thanh_toan_that_bai' => 'Đơn hàng ' . $bill->vn_pay_code . ' đã được thanh toán thất bại',
+            'dang_giao_hang' => 'Đơn hàng ' . $bill->vn_pay_code . ' đang được giao hàng',
+            'da_nhan' => 'Đơn hàng ' . $bill->vn_pay_code . ' đã được nhận',
+        );
+
+        $fcmNotification = new FCMNotification();
+        $fcmNotification->sendNotification($message[$bill->status], User::find($bill->user_id));
 
         return $this->successResponse(
             new BillResource($bill),

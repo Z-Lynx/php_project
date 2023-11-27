@@ -140,6 +140,8 @@ const onMessage = (e) => {
 
   if (e.data.response.vnp_ResponseCode === "00") {
     carts.value = [];
+    store.dispatch("removeAllCart");
+    
     toast.add({
       severity: "success",
       summary: "Thanh Toán Thành Công",

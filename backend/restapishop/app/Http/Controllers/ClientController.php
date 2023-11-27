@@ -61,7 +61,7 @@ class ClientController extends Controller
             'user_id' => $request->user()->id,
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
-            'price' => Product::find($request->product_id)->price * $request->quantity
+            'price' => Product::find($request->product_id)->sale_price * $request->quantity
         ]);
 
         return $this->successResponse(
@@ -86,6 +86,7 @@ class ClientController extends Controller
 
         if ($cart) {
             $cart->quantity = $request->quantity;
+            $cart->price = Product::find($cart->product_id)->sale_price * $request->quantity;
             $cart->save();
         }
 
