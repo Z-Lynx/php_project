@@ -2,9 +2,10 @@
 
 ## Technology
 
-- StoreX
-- Vue3
-- TailwindCss
+- Laravel 10
+- Vuex 4.0.0
+- Vue 3
+- Tailwind Css 3.3.5
 - FCM (Firebase Cloud Messaging)
 - Pusher
 
@@ -41,7 +42,9 @@
 
 | Feature           | Status                                                    |
 | ------------------ | -------------------------------------------------------  |
+| Admin UI           | ![Auth](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Auth               | ![Auth](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
+| Notifi + socket    | ![Auth](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Shop               | ![Shop](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Detail             | ![Detail](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
 | Cart               | ![Cart](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)                           |
